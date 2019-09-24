@@ -12,7 +12,7 @@ public class JungleGameTest {
 
     @Test
     public void testJungleGameConstructor(){
-        JungleGame game = new JungleGame();
+        JungleGame game = new JunglseGame();
         assert true;
     }
 
