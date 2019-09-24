@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1RH4Unr8Zo8IKPaDKSuMvyKzOTD" />
+  <component name="RunManager">
+    <configuration name="GameBoard" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="hk.edu.polyu.comp.comp2021.jungle.model.GameBoard" />
+      <module name="Jungle_Game_PolyU" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="hk.edu.polyu.comp.comp2021.jungle.model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.GameBoard" />
+      </list>
+    </recent_temporary>
+  </component>
+</project>
