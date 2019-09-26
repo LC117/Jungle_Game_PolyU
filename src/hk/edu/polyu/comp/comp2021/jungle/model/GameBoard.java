@@ -2,10 +2,24 @@ package hk.edu.polyu.comp.comp2021.jungle.model;
 
 import java.util.Arrays;
 
+/*
+"GameBoard" is a two-dimensional array containing the single pieces:
+    1)Rat
+    2)Cat
+    3)Dog
+    4)Wolf
+    5)Leopard
+    6)Tiger
+    7)Lion
+    8)Elephant
+    -> If the field is has the value "null" it is empty
+    Each Animal will have a toString() method that returns its string representation: e.g elephant -> "8" | none -> "_"
+ */
 public class GameBoard {
     private static int height = 9;
     private static int width = 7;
     private String [][] boardArray = new String [height][width]; // y, x
+    //TODO change the array type to Animal and use its toString() method
 
     public GameBoard() {
         for(int y = 0; y < height; y++) {
@@ -44,10 +58,10 @@ public class GameBoard {
         }
         return boardString;
     }
-    public static void main (String []args){
-        GameBoard g = new GameBoard();
-        System.out.println(g.toString());
-    }
+//    public static void main (String []args){
+//        GameBoard g = new GameBoard();
+//        System.out.println(g.toString());
+//    }
 }
 
 
