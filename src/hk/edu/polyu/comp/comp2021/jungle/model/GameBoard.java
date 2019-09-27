@@ -58,10 +58,6 @@ public class GameBoard {
         }
         return boardString;
     }
-//    public static void main (String []args){
-//        GameBoard g = new GameBoard();
-//        System.out.println(g.toString());
-//    }
 }
 
 

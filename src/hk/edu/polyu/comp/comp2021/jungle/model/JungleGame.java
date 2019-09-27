@@ -1,6 +1,5 @@
 package hk.edu.polyu.comp.comp2021.jungle.model;
 
-
 public class JungleGame {
     private GameBoard board;
     public JungleGame(){
@@ -19,7 +18,7 @@ public class JungleGame {
     -> checks the semantic correctness of the input (on the Board) and
     applies the changes.
      */
-    public void newInput(){
+    public void newInput(String animal, int x_value, int y_value){
 
     }
 

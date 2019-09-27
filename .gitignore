@@ -7,3 +7,14 @@ out/production/Jungle_Game_PolyU/hk/edu/polyu/comp/comp2021/jungle/Application.c
 out/production/Jungle_Game_PolyU/hk/edu/polyu/comp/comp2021/jungle/model/GameBoard.class
 out/production/Jungle_Game_PolyU/hk/edu/polyu/comp/comp2021/jungle/model/JungleGame.class
 out/production/Jungle_Game_PolyU/META-INF/Jungle_Game_PolyU.kotlin_module
+out/production/Jungle_Game_PolyU/hk/edu/polyu/comp/comp2021/jungle/controller/Controller.class
+out/production/Jungle_Game_PolyU/hk/edu/polyu/comp/comp2021/jungle/model/pieces/Animal.class
+out/production/Jungle_Game_PolyU/hk/edu/polyu/comp/comp2021/jungle/model/pieces/Cat.class
+out/production/Jungle_Game_PolyU/hk/edu/polyu/comp/comp2021/jungle/model/pieces/Dog.class
+out/production/Jungle_Game_PolyU/hk/edu/polyu/comp/comp2021/jungle/model/pieces/Elephant.class
+out/production/Jungle_Game_PolyU/hk/edu/polyu/comp/comp2021/jungle/model/pieces/Leopard.class
+out/production/Jungle_Game_PolyU/hk/edu/polyu/comp/comp2021/jungle/model/pieces/Lion.class
+out/production/Jungle_Game_PolyU/hk/edu/polyu/comp/comp2021/jungle/model/pieces/Rat.class
+out/production/Jungle_Game_PolyU/hk/edu/polyu/comp/comp2021/jungle/model/pieces/Tiger.class
+out/production/Jungle_Game_PolyU/hk/edu/polyu/comp/comp2021/jungle/model/pieces/Wolf.class
+out/production/Jungle_Game_PolyU/hk/edu/polyu/comp/comp2021/jungle/view/GameBoard.class
