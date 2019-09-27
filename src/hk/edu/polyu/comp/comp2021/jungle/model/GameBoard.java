@@ -4,16 +4,17 @@ import java.util.Arrays;
 
 /*
 "GameBoard" is a two-dimensional array containing the single pieces:
-    1)Rat
-    2)Cat
-    3)Dog
-    4)Wolf
-    5)Leopard
-    6)Tiger
-    7)Lion
-    8)Elephant
+    1)Rat 🐀
+    2)Cat🐱
+    3)Dog 🐶
+    4)Wolf 🐺
+    5)Leopard 🐆
+    6)Tiger 🐯
+    7)Lion 🦁
+    8)Elephant 🐘
     -> If the field is has the value "null" it is empty
     Each Animal will have a toString() method that returns its string representation: e.g elephant -> "8" | none -> "_"
+    TODO maybe one could use number 1-8 and the other letters a-h
  */
 public class GameBoard {
     private static int height = 9;
