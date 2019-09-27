@@ -7,4 +7,3 @@ Brief overview of the actual Model-View-Controller setup.
      alt="MVC"
      style="height: 350px; border: 5px; "/>
 
-
