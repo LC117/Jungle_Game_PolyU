@@ -1,4 +1,7 @@
 package hk.edu.polyu.comp.comp2021.jungle.view;
+
+import hk.edu.polyu.comp.comp2021.jungle.model.GameBoard;
+
 public class View{
 
     /*
@@ -11,8 +14,8 @@ public class View{
     /*
 
      */
-    public void displayGameUpdate(){
-
+    public void displayGameUpdate(GameBoard gameBoard){
+        System.out.println(gameBoard.toString());
     }
 
 }

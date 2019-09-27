@@ -10,6 +10,7 @@ public class Controller {
     Expected format: "*first 3 letter of animal name*-*x_coordinate*-*y_coordinate*"
     */
     public void playGame(View view, JungleGame game){
+        game.updateView(view);
         Scanner scanner = new Scanner(System.in);
         String input;
         String [] animalXY; // the input String that is split on "-".
@@ -21,7 +22,7 @@ public class Controller {
             }else{
                 //pass the input on to the model
                 game.newInput(animalXY[0], Integer.valueOf(animalXY[1]), Integer.valueOf(animalXY[2]));
-                //TODO ask next player to move in view!
+                //TODO ask next player to move in view! ->
             }
         }
     }

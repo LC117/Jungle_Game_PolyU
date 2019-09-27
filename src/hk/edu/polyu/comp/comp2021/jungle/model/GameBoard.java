@@ -19,7 +19,6 @@ public class GameBoard {
     private static int height = 9;
     private static int width = 7;
     private String [][] boardArray = new String [height][width]; // y, x
-    //TODO change the array type to Animal and use its toString() method
 
     public GameBoard() {
         for(int y = 0; y < height; y++) {
@@ -49,7 +48,17 @@ public class GameBoard {
                 }
             }
         }
+        insertAnimals();
     }
+
+    /*
+    insertAnimals() put all animals in the start position!
+     */
+    private void insertAnimals(){
+        //TODO isert all animals wiht their toString mehtod!
+
+    }
+
     @Override
     public String toString(){
         String boardString = "";
