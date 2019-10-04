@@ -7,7 +7,7 @@ public class Animal{
     private int strength;
 
     public Animal (int x_location, int y_location, boolean frontPlayer, int strength){
-       if (isMoveLegal(x_location, y_location)) {
+       if (!isMoveLegal(x_location, y_location)) {
            System.out.println("initialization Parameters are wrong!");
            System.exit(-1);
        } else {
@@ -21,15 +21,21 @@ public class Animal{
     public int getStrength(){
         return this.strength;
     }
+    public int getX_location(){
+        return  this.x_location;
+    }
+    public int getY_location(){
+        return this.y_location;
+    }
 
     /*
     isMoveLegal() returns true if the location is possible: in Bounds [0, ..., 6], not on own den or water.
      */
     private boolean isMoveLegal (int x, int y){
         boolean inBounds =  x < 0 || x > 6 || y < 0 || y > 8;
-        boolean water = (y == 3 || y == 4 || y == 5) && (x == 1 || x == 2 || x == 7 - 2 || x == 7 - 3);
-        boolean den = frontPlayer ? (x == 3 && y == 0) : ((x == 3 && y == 8));
-        return !water || inBounds || !den; // not in water, in Bound, not on den
+        boolean water = (y == 3 || y == 4 || y == 5) && (x == 1 || x == 2 || x == 4 || x == 5);
+        boolean den = frontPlayer ? (x == 3 && y == 0) : (x == 3 && y == 8);
+        return !water || !inBounds || !den; // not in water, in Bound, not on OWN Den
     }
 
     /*
@@ -53,6 +59,15 @@ public class Animal{
             return true;
         }
         return false;
+    }
+
+    @Override
+    public String toString(){
+        if (!frontPlayer){
+            return (char)(this.strength+96) + "";
+        }else{
+            return this.strength + "";
+        }
     }
 }
 

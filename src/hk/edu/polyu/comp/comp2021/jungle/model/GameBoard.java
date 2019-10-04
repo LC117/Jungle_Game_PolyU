@@ -1,5 +1,7 @@
 package hk.edu.polyu.comp.comp2021.jungle.model;
 
+import hk.edu.polyu.comp.comp2021.jungle.model.pieces.*;
+
 import java.util.Arrays;
 
 /*
@@ -12,14 +14,22 @@ import java.util.Arrays;
     6)Tiger 🐯
     7)Lion 🦁
     8)Elephant 🐘
-    -> If the field is has the value "null" it is empty
+    -> the animals are inserted in the 2D-String-Array.
     Each Animal will have a toString() method that returns its string representation: e.g elephant -> "8" | none -> "_"
     TODO maybe one could use number 1-8 and the other letters a-h
+
+    Idea:
+    The GameBoard Class has the 2D String representation of itself as private variable. With getter and a function that performs changes.
+    Each Animal has its location, strength and abilities stored in its own Class. They have access to information from the game-board playing field. (e.g. which animal is where)
+    Each time an animal is moved we have to test if the new location is valid: no stronger animal there, in bounds, not on own Dan and water check.
+    -> if the location is possible is done by calling the move() function that performs the move if possible.
  */
 public class GameBoard {
     private static int height = 9;
     private static int width = 7;
-    private String [][] boardArray = new String [height][width]; // y, x
+    private String [][] boardArray = new String [height][width]; // y, x -> like this because of the printing
+    private Animal [] playerFront = new Animal[8];
+    private Animal [] playerBack = new Animal[8];
 
     public GameBoard() {
         for(int y = 0; y < height; y++) {
@@ -49,21 +59,48 @@ public class GameBoard {
                 }
             }
         }
-        insertAnimals();
+        initializeAnimals();
+        //insertAnimals();
     }
 
-    /*
-    insertAnimals() put all animals in the start position!
-     */
-    private void insertAnimals(){
+    private void initializeAnimals(){
+        playerFront[0] = new Rat(6, 2, true);
+        playerFront[1] = new Cat(1, 1 ,true);
+        playerFront[2] = new Dog(5, 1, true);
+        playerFront[3] = new Wolf(2, 2, true);
+        playerFront[4] = new Leopard(4, 2, true);
+        playerFront[5] = new Tiger (0, 0, true);
+        playerFront[6] = new Lion (6, 0, true);
+        playerFront[7] = new Elephant(0, 2, true);
+
+        playerBack[0] = new Rat(0, 6, false);
+        playerBack[1] = new Cat(5, 7, false);
+        playerBack[2] = new Dog(1, 7, false);
+        playerBack[3] = new Wolf(4, 6, false);
+        playerBack[4] = new Leopard(2, 6, false);
+        playerBack[5] = new Tiger(6, 8, false);
+        playerBack[6] = new Lion(0, 8, false);
+        playerBack[7] = new Elephant(6, 6, false);
+
+        for (int i = 0; i < 8; i++) {
+            insert(playerFront[i]);
+            insert(playerBack[i]);
+        }
+    }
+
+    private void insert(Animal animal){
+        boardArray[animal.getY_location()][animal.getX_location()] = "|" + animal.toString() + "|";
+    }
         //TODO isert all animals wiht their toString mehtod!
 
+    public String[][] getGameboard(){
+        return this.boardArray;
     }
 
     @Override
     public String toString(){
         String boardString = "";
-        for (int i = 0; i < 9; i++) {
+        for (int i = 8; i >= 0; i--) {
             boardString += Arrays.toString(this.boardArray[i]) + "\n";
         }
         return boardString;
