@@ -42,7 +42,7 @@ public class Animal{
     move() allows an animal to change its location.
     If the new location is not possible because of the animals movement abilities ->returns false.
      */
-    private boolean move (int x_new, int y_new){
+    public boolean move (int x_new, int y_new){
         //check if new position is left, right, above or under the current location
         //as well as if the move is possible
         if (!isMoveLegal(x_new, y_new)) {
@@ -68,6 +68,9 @@ public class Animal{
         }else{
             return this.strength + "";
         }
+    }
+    public boolean getFrontPlayer(){
+        return this.frontPlayer;
     }
 }
 

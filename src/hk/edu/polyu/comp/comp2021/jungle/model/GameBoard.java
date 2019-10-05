@@ -95,8 +95,7 @@ public class GameBoard {
         return this.boardArray;
     }
 
-<<<<<<< Updated upstream
-=======
+
     public Animal getAnimal(String animal){
         boolean frontPlayer = animal.charAt(0) < 60;
         if(frontPlayer){ //animal: [1-8] is appartaining to frontPlayer
@@ -145,6 +144,7 @@ public class GameBoard {
         return false;
     }
 
+
     public Animal [] getplayerFront(){
         return playerFront;
     }
@@ -152,15 +152,16 @@ public class GameBoard {
         return this.playerBack;
     }
 
->>>>>>> Stashed changes
+
+
     @Override
     public String toString(){
         String boardString = "";
         for (int i = 8; i >= 0; i--) {
-<<<<<<< Updated upstream
+
             boardString += Arrays.toString(this.boardArray[i]) + "\n";
         }
-=======
+
             //boardString += i + " " + Arrays.toString(this.boardArray[i]) + "\n";
             boardString += i + "| ";
             for(int x = 6; x >=0; x--){
@@ -170,7 +171,10 @@ public class GameBoard {
         }
         boardString += "_|_____________________________ \n";
         boardString += " |  0   1   2   3   4   5   6 ";
->>>>>>> Stashed changes
+
+            boardString += i + " " + Arrays.toString(this.boardArray[i]) + "\n";
+        }
+        boardString += "    0    1    2    3    4    5    6 ";
         return boardString;
     }
 }

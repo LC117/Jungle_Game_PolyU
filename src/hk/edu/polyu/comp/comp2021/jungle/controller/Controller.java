@@ -12,7 +12,6 @@ public class Controller {
     Expected format: "*first 3 letter of animal name*-*x_coordinate*-*y_coordinate*"
     */
     public void playGame(View view, JungleGame game){
-        game.updateView(view);
         Scanner scanner = new Scanner(System.in);
         String input;
         String [] animalXY; // the input String that is split on "-".
@@ -29,7 +28,7 @@ public class Controller {
 
             if(success){
                 view.displayMessage("Turn: " + turnCount);
-                game.updateView(view);}
+                view.displayGameUpdate(game.getGameBoard());}
 
             view.displayMessage(turnMessage);
             view.displayMessage("");
@@ -39,7 +38,7 @@ public class Controller {
                 view.displayMessage("ERROR: Input has wrong format: use *piece name*-*x_coordinate*-*y_coordinate* and try again: ");
                 success = false;
             }
-            else if(!typeCheck(playerName, animalXY[0])){
+            else if((game.getGameBoard().stillAlive(turnCount%2 == 1, animalXY[0]))){
                 view.displayMessage("ERROR: Player abc use alphabetical characters, Player int please use the numbers");
                 success = false;
             }
@@ -87,30 +86,8 @@ public class Controller {
         }
         boolean nameOk = input[0].length() == 1;
         return lengthOk && nameOk;
-    }
+    }  
 
-<<<<<<< Updated upstream
-    private boolean typeCheck(String playerName, String pieceName){
-        String [] intPieces =   {"1", "2", "3", "4", "5", "6", "7", "8"};
-        String [] abcPieces = {"a", "b", "c", "d", "e", "f", "g", "h"};
-
-
-        if(playerName.equals("int")){
-            for (String element : intPieces) {
-                if (element.equals(pieceName)) {
-                    return true;
-                }
-            }
-        }
-        else if(playerName.equals("abc")){
-            for (String element : abcPieces) {
-                if (element.equals(pieceName)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-=======
 
     private boolean endGame(boolean playerTurn, JungleGame game){
 
@@ -128,7 +105,7 @@ public class Controller {
             }
         }
         return true;
->>>>>>> Stashed changes
     }
+
 
 }
