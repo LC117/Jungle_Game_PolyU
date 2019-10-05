@@ -95,6 +95,7 @@ public class GameBoard {
         return this.boardArray;
     }
 
+
     public Animal getAnimal(String animal){
         boolean frontPlayer = animal.charAt(0) < 60;
         if(frontPlayer){ //animal: [1-8] is appartaining to frontPlayer
@@ -143,10 +144,34 @@ public class GameBoard {
         return false;
     }
 
+
+    public Animal [] getplayerFront(){
+        return playerFront;
+    }
+    public Animal [] getPlayerBack(){
+        return this.playerBack;
+    }
+
+
+
     @Override
     public String toString(){
         String boardString = "";
         for (int i = 8; i >= 0; i--) {
+
+            boardString += Arrays.toString(this.boardArray[i]) + "\n";
+        }
+
+            //boardString += i + " " + Arrays.toString(this.boardArray[i]) + "\n";
+            boardString += i + "| ";
+            for(int x = 6; x >=0; x--){
+                boardString += boardArray[i][x] + " ";
+            }
+            boardString += " \n";
+        }
+        boardString += "_|_____________________________ \n";
+        boardString += " |  0   1   2   3   4   5   6 ";
+
             boardString += i + " " + Arrays.toString(this.boardArray[i]) + "\n";
         }
         boardString += "    0    1    2    3    4    5    6 ";
