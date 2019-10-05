@@ -22,7 +22,6 @@ public class Controller {
             }else{
                 //pass the input on to the model
                 game.newInput(animalXY[0], Integer.valueOf(animalXY[1]), Integer.valueOf(animalXY[2]));
-                //TODO ask next player to move in view! ->
             }
         }
     }
@@ -32,7 +31,7 @@ public class Controller {
     returns true if syntax is correct.
      */
     private boolean inputFormatOk(String [] input){
-        boolean lengthOk = input.length == 3;
+        boolean lengthOk = input.length == 1;
         try{//check if coordinates are Integers
             Integer.parseInt(input[1]);
             Integer.parseInt(input[2]);

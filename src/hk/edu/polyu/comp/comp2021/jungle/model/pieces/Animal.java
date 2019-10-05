@@ -32,10 +32,10 @@ public class Animal{
     isMoveLegal() returns true if the location is possible: in Bounds [0, ..., 6], not on own den or water.
      */
     private boolean isMoveLegal (int x, int y){
-        boolean inBounds =  x < 0 || x > 6 || y < 0 || y > 8;
+        boolean inBounds =  !(x < 0 || x > 6 || y < 0 || y > 8);
         boolean water = (y == 3 || y == 4 || y == 5) && (x == 1 || x == 2 || x == 4 || x == 5);
-        boolean den = frontPlayer ? (x == 3 && y == 0) : (x == 3 && y == 8);
-        return !water || !inBounds || !den; // not in water, in Bound, not on OWN Den
+        boolean ownDen = frontPlayer ? (x == 3 && y == 0) : (x == 3 && y == 8);
+        return !water || inBounds || !ownDen; // not in water, in Bound, not on OWN Den
     }
 
     /*
