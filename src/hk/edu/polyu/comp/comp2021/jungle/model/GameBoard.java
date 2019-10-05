@@ -95,12 +95,31 @@ public class GameBoard {
         return this.boardArray;
     }
 
+    public Animal getAnimal(String animal){
+        boolean frontPlayer = animal.charAt(0) > 60;
+        if(frontPlayer){ //animal: [1-8] is appartaining to frontPlayer
+            return this.playerFront[Integer.parseInt(animal)];
+        }else{
+            int animalNumber;
+            animalNumber = animal.charAt(0) - 97;
+            return this.playerFront[animalNumber];
+        }
+    }
+
+    public void moveAnimal(Animal movedAnimal){ //Parameter is the Animal with its new location.
+        //TODO
+    }
+    public void removeAnimal(Animal eatenAnimal){
+        //TODO -> or to think how to implement
+    }
+
     @Override
     public String toString(){
         String boardString = "";
         for (int i = 8; i >= 0; i--) {
-            boardString += Arrays.toString(this.boardArray[i]) + "\n";
+            boardString += i + " " + Arrays.toString(this.boardArray[i]) + "\n";
         }
+        boardString += "    0    1    2    3    4    5    6 ";
         return boardString;
     }
 }
