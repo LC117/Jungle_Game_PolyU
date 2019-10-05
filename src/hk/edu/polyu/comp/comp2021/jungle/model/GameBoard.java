@@ -63,23 +63,23 @@ public class GameBoard {
     } // Constructor
 
     private void initializeAnimals(){
-        playerFront[0] = new Rat(6, 2, true);
-        playerFront[1] = new Cat(1, 1 ,true);
-        playerFront[2] = new Dog(5, 1, true);
-        playerFront[3] = new Wolf(2, 2, true);
-        playerFront[4] = new Leopard(4, 2, true);
-        playerFront[5] = new Tiger (0, 0, true);
-        playerFront[6] = new Lion (6, 0, true);
-        playerFront[7] = new Elephant(0, 2, true);
+        playerFront[0] = new Rat(6, 2, true, this);
+        playerFront[1] = new Cat(1, 1 ,true, this);
+        playerFront[2] = new Dog(5, 1, true, this);
+        playerFront[3] = new Wolf(2, 2, true, this);
+        playerFront[4] = new Leopard(4, 2, true,this);
+        playerFront[5] = new Tiger (0, 0, true, this);
+        playerFront[6] = new Lion (6, 0, true, this);
+        playerFront[7] = new Elephant(0, 2, true, this);
 
-        playerBack[0] = new Rat(0, 6, false);
-        playerBack[1] = new Cat(5, 7, false);
-        playerBack[2] = new Dog(1, 7, false);
-        playerBack[3] = new Wolf(4, 6, false);
-        playerBack[4] = new Leopard(2, 6, false);
-        playerBack[5] = new Tiger(6, 8, false);
-        playerBack[6] = new Lion(0, 8, false);
-        playerBack[7] = new Elephant(6, 6, false);
+        playerBack[0] = new Rat(0, 6, false, this);
+        playerBack[1] = new Cat(5, 7, false, this);
+        playerBack[2] = new Dog(1, 7, false, this);
+        playerBack[3] = new Wolf(4, 6, false, this);
+        playerBack[4] = new Leopard(2, 6, false, this);
+        playerBack[5] = new Tiger(6, 8, false, this);
+        playerBack[6] = new Lion(0, 8, false, this);
+        playerBack[7] = new Elephant(6, 6, false, this);
 
         for (int i = 0; i < 8; i++) {
             insert(playerFront[i]);
@@ -106,11 +106,64 @@ public class GameBoard {
         }
     }
 
+<<<<<<< Updated upstream
     public void moveAnimal(Animal movedAnimal){ //Parameter is the Animal with its new location.
         //TODO
     }
     public void removeAnimal(Animal eatenAnimal){
         //TODO -> or to think how to implement
+=======
+    public Animal getAnimal(int x, int y){
+
+            for (int i = 0; i < 8; i++) {
+                if (playerFront[i].getX_location() == x && playerFront[i].getY_location() == y){
+                    return playerFront[i];
+                }
+                if (playerBack[i].getX_location() == x && playerBack[i].getY_location() == y){
+                    return playerBack[i];
+                }
+            }
+            return null;
+    }
+
+    public void moveAnimal(int from_x, int from_y, Animal movedAnimal){ //Parameter is the Animal with its new location. Is called by the Animal class to submit change.
+        boardArray[from_y][from_x] = boardArray[from_x][from_y].charAt(0) + "_" + boardArray[from_x][from_y].charAt(2);
+        boardArray[movedAnimal.getY_location()][ movedAnimal.getX_location()] = boardArray[from_x][from_y].charAt(0) + movedAnimal.toString() + boardArray[from_x][from_y].charAt(2);
+    }
+    public void removeAnimal(Animal eatenAnimal){
+        if(eatenAnimal.getFrontPlayer()){
+            for (int i = 0; i < 8; i++) {
+                if (playerFront[i].equals(eatenAnimal)){
+                    playerFront[i] = null; // animal is gone
+                    return;
+                }
+            }
+        }
+        else {
+            for (int i = 0; i < 8; i++) {
+                if (playerBack[i].equals(eatenAnimal)){
+                    playerBack[i] = null; // animal is gone
+                    return;
+                }
+            }
+        }
+    }
+
+
+    public boolean stillAlive(boolean frontplayer, String animal){
+        Animal [] actual;
+        if (frontplayer){
+            actual = playerFront;
+        }else{
+            actual = playerBack;
+        }
+        for (int i = 0; i < 8; i++) {
+            if(actual[i] != null && actual[i].toString().equals(animal)){
+                return true;
+            }
+        }
+        return false;
+>>>>>>> Stashed changes
     }
 
     @Override

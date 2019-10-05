@@ -1,16 +1,20 @@
 package hk.edu.polyu.comp.comp2021.jungle.model.pieces;
+import hk.edu.polyu.comp.comp2021.jungle.model.GameBoard;
+
 //Animals is part of the model as we consider it part of the games database.
 public class Animal{
     private int x_location;
     private int y_location;
     private boolean frontPlayer; //true if Animal is owned by front Player.
     private int strength;
+    private GameBoard gameBoard;
 
-    public Animal (int x_location, int y_location, boolean frontPlayer, int strength){
+    public Animal (int x_location, int y_location, boolean frontPlayer, int strength, GameBoard gameBoard){
        if (!isMoveLegal(x_location, y_location)) {
            System.out.println("initialization Parameters are wrong!");
            System.exit(-1);
        } else {
+           this.gameBoard = gameBoard;
            this.x_location = x_location;
            this.y_location = y_location;
            this.frontPlayer = frontPlayer;
@@ -35,7 +39,19 @@ public class Animal{
         boolean inBounds =  !(x < 0 || x > 6 || y < 0 || y > 8);
         boolean water = (y == 3 || y == 4 || y == 5) && (x == 1 || x == 2 || x == 4 || x == 5);
         boolean ownDen = frontPlayer ? (x == 3 && y == 0) : (x == 3 && y == 8);
-        return !water || inBounds || !ownDen; // not in water, in Bound, not on OWN Den
+        boolean animalInWay = false; //true if: stronger Enemy, own animal
+        Animal collisionAnimal = gameBoard.getAnimal(x, y);
+        if (collisionAnimal == null){
+            animalInWay = false;
+        }
+        else if (collisionAnimal.getFrontPlayer() == frontPlayer){
+            animalInWay = true;
+        }else if (collisionAnimal.strength > this.strength){
+            animalInWay = true;
+        }else if (collisionAnimal.strength <= this.strength){ //other Animal will be eaten!
+            animalInWay = false;
+        }
+        return !water || inBounds || !ownDen || !animalInWay; // not in water, in Bound, not on OWN Den, not on own Animal, not stronger enemy Animal!
     }
 
     /*
@@ -53,9 +69,15 @@ public class Animal{
         boolean right = this.x_location == x_new - 1 && this.y_location == x_new;
         boolean bottom = this.x_location == x_new && this.y_location == x_new + 1;
         //TODO check if on the fiels is another animal (own or stronger enemy one)
-        if(top || right || left || bottom){ // perform move
+        if(top || left || right || bottom){
+            int from_x = this.x_location;
+            int from_y = this.y_location;
             this.x_location = x_new;
             this.y_location = y_new;
+            gameBoard.moveAnimal(from_x, from_y, this);
+            if(gameBoard.getAnimal(x_new, y_new) != null) { // this test is ok here because in is MoveLegal() we only left open if there is a weaker animal.
+                gameBoard.removeAnimal(gameBoard.getAnimal(x_new, y_new));//remove eaten animal
+            }
             return true;
         }
         return false;
