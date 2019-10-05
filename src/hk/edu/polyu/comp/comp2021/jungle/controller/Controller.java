@@ -28,7 +28,7 @@ public class Controller {
 
             if(success){
                 view.displayMessage("Turn: " + turnCount);
-                game.updateView(view);}
+                view.displayGameUpdate(game.getGameBoard());}
 
             view.displayMessage(turnMessage);
             view.displayMessage("");
