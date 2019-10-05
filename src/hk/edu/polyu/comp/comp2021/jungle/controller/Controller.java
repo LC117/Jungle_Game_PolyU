@@ -37,7 +37,7 @@ public class Controller {
                 view.displayMessage("ERROR: Input has wrong format: use *piece name*-*x_coordinate*-*y_coordinate* and try again: ");
                 success = false;
             }
-            else if(!typeCheck(playerName, animalXY[0])){
+            else if((game.getGameBoard().stillAlive(turnCount%2 == 1, animalXY[0]))){
                 view.displayMessage("ERROR: Player abc use alphabetical characters, Player int please use the numbers");
                 success = false;
             }
@@ -71,27 +71,4 @@ public class Controller {
         boolean nameOk = input[0].length() == 1;
         return lengthOk && nameOk;
     }
-
-    private boolean typeCheck(String playerName, String pieceName){
-        String [] intPieces =   {"1", "2", "3", "4", "5", "6", "7", "8"};
-        String [] abcPieces = {"a", "b", "c", "d", "e", "f", "g", "h"};
-
-
-        if(playerName.equals("int")){
-            for (String element : intPieces) {
-                if (element.equals(pieceName)) {
-                    return true;
-                }
-            }
-        }
-        else if(playerName.equals("abc")){
-            for (String element : abcPieces) {
-                if (element.equals(pieceName)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
 }

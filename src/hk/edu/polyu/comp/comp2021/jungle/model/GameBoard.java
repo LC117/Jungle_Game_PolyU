@@ -106,11 +106,41 @@ public class GameBoard {
         }
     }
 
-    public void moveAnimal(Animal movedAnimal){ //Parameter is the Animal with its new location.
+    public void moveAnimal(Animal movedAnimal){ //Parameter is the Animal with its new location. Is called by the Animal class to submit change.
         //TODO
     }
     public void removeAnimal(Animal eatenAnimal){
-        //TODO -> or to think how to implement
+        if(eatenAnimal.getFrontPlayer()){
+            for (int i = 0; i < 8; i++) {
+                if (playerFront[i].equals(eatenAnimal)){
+                    playerFront[i] = null; // animal is gone
+                    return;
+                }
+            }
+        }
+        else {
+            for (int i = 0; i < 8; i++) {
+                if (playerBack[i].equals(eatenAnimal)){
+                    playerBack[i] = null; // animal is gone
+                    return;
+                }
+            }
+        }
+    }
+
+    public boolean stillAlive(boolean frontplayer, String animal){
+        Animal [] actual;
+        if (frontplayer){
+            actual = playerFront;
+        }else{
+            actual = playerBack;
+        }
+        for (int i = 0; i < 8; i++) {
+            if(actual[i] != null && actual[i].toString().equals(animal)){
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
