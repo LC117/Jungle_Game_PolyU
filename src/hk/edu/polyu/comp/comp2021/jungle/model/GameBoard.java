@@ -96,7 +96,7 @@ public class GameBoard {
     }
 
     public Animal getAnimal(String animal){
-        boolean frontPlayer = animal.charAt(0) > 60;
+        boolean frontPlayer = animal.charAt(0) < 60;
         if(frontPlayer){ //animal: [1-8] is appartaining to frontPlayer
             return this.playerFront[Integer.parseInt(animal)];
         }else{
