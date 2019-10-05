@@ -16,7 +16,7 @@ import java.util.Arrays;
     8)Elephant 🐘
     -> the animals are inserted in the 2D-String-Array.
     Each Animal will have a toString() method that returns its string representation: e.g elephant -> "8" | none -> "_"
-    TODO maybe one could use number 1-8 and the other letters a-h
+    DONE: maybe one could use number 1-8 and the other letters a-h
 
     Idea:
     The GameBoard Class has the 2D String representation of itself as private variable. With getter and a function that performs changes.
@@ -60,8 +60,7 @@ public class GameBoard {
             }
         }
         initializeAnimals();
-        //insertAnimals();
-    }
+    } // Constructor
 
     private void initializeAnimals(){
         playerFront[0] = new Rat(6, 2, true);
@@ -91,7 +90,6 @@ public class GameBoard {
     private void insert(Animal animal){
         boardArray[animal.getY_location()][animal.getX_location()] = "|" + animal.toString() + "|";
     }
-        //TODO isert all animals wiht their toString mehtod!
 
     public String[][] getGameboard(){
         return this.boardArray;
