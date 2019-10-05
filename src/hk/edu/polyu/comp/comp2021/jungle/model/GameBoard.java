@@ -95,12 +95,82 @@ public class GameBoard {
         return this.boardArray;
     }
 
+<<<<<<< Updated upstream
+=======
+    public Animal getAnimal(String animal){
+        boolean frontPlayer = animal.charAt(0) < 60;
+        if(frontPlayer){ //animal: [1-8] is appartaining to frontPlayer
+            return this.playerFront[Integer.parseInt(animal)];
+        }else{
+            int animalNumber;
+            animalNumber = animal.charAt(0) - 97;
+            return this.playerFront[animalNumber];
+        }
+    }
+
+    public void moveAnimal(Animal movedAnimal){ //Parameter is the Animal with its new location. Is called by the Animal class to submit change.
+        //TODO
+    }
+    public void removeAnimal(Animal eatenAnimal){
+        if(eatenAnimal.getFrontPlayer()){
+            for (int i = 0; i < 8; i++) {
+                if (playerFront[i].equals(eatenAnimal)){
+                    playerFront[i] = null; // animal is gone
+                    return;
+                }
+            }
+        }
+        else {
+            for (int i = 0; i < 8; i++) {
+                if (playerBack[i].equals(eatenAnimal)){
+                    playerBack[i] = null; // animal is gone
+                    return;
+                }
+            }
+        }
+    }
+
+    public boolean stillAlive(boolean frontplayer, String animal){
+        Animal [] actual;
+        if (frontplayer){
+            actual = playerFront;
+        }else{
+            actual = playerBack;
+        }
+        for (int i = 0; i < 8; i++) {
+            if(actual[i] != null && actual[i].toString().equals(animal)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Animal [] getplayerFront(){
+        return playerFront;
+    }
+    public Animal [] getPlayerBack(){
+        return this.playerBack;
+    }
+
+>>>>>>> Stashed changes
     @Override
     public String toString(){
         String boardString = "";
         for (int i = 8; i >= 0; i--) {
+<<<<<<< Updated upstream
             boardString += Arrays.toString(this.boardArray[i]) + "\n";
         }
+=======
+            //boardString += i + " " + Arrays.toString(this.boardArray[i]) + "\n";
+            boardString += i + "| ";
+            for(int x = 6; x >=0; x--){
+                boardString += boardArray[i][x] + " ";
+            }
+            boardString += " \n";
+        }
+        boardString += "_|_____________________________ \n";
+        boardString += " |  0   1   2   3   4   5   6 ";
+>>>>>>> Stashed changes
         return boardString;
     }
 }

@@ -1,5 +1,6 @@
 package hk.edu.polyu.comp.comp2021.jungle.controller;
 import hk.edu.polyu.comp.comp2021.jungle.model.JungleGame;
+import hk.edu.polyu.comp.comp2021.jungle.model.pieces.Animal;
 import hk.edu.polyu.comp.comp2021.jungle.view.View;
 import java.util.Scanner;
 import java.util.Arrays;
@@ -52,6 +53,21 @@ public class Controller {
                 }
                 else if(playerName.equals("abc")){
                     playerName = "int";
+
+
+                if(endGame(turnCount%2 == 1, game)){
+                    gameState = false;
+                    String winner;
+                    if(turnCount%2 == 1){
+                        winner = "int";
+                    }
+                    else{
+                        winner = "abc";
+                    }
+                    view.displayMessage(">>>>>Player " + winner + " is Victorious<<<<<<");
+                }
+
+
                 }
             }
         }
@@ -73,6 +89,7 @@ public class Controller {
         return lengthOk && nameOk;
     }
 
+<<<<<<< Updated upstream
     private boolean typeCheck(String playerName, String pieceName){
         String [] intPieces =   {"1", "2", "3", "4", "5", "6", "7", "8"};
         String [] abcPieces = {"a", "b", "c", "d", "e", "f", "g", "h"};
@@ -93,6 +110,25 @@ public class Controller {
             }
         }
         return false;
+=======
+
+    private boolean endGame(boolean playerTurn, JungleGame game){
+
+        Animal [] playerPieces;
+
+        if(playerTurn){
+            playerPieces = game.getGameBoard().getplayerFront();
+        }
+        else{
+            playerPieces = game.getGameBoard().getPlayerBack();
+        }
+        for(Animal an: playerPieces){
+            if(an != null){
+                return false;
+            }
+        }
+        return true;
+>>>>>>> Stashed changes
     }
 
 }
