@@ -10,7 +10,7 @@ public class Controller {
     Expected format: "*first 3 letter of animal name*-*x_coordinate*-*y_coordinate*"
     */
     public void playGame(View view, JungleGame game){
-        game.updateView(view);
+        view.displayGameUpdate(game.getGameBoard());
         Scanner scanner = new Scanner(System.in);
         String input;
         String [] animalXY; // the input String that is split on "-".

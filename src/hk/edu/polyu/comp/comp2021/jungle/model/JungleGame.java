@@ -1,5 +1,6 @@
 package hk.edu.polyu.comp.comp2021.jungle.model;
-import hk.edu.polyu.comp.comp2021.jungle.view.View;
+
+import hk.edu.polyu.comp.comp2021.jungle.model.pieces.Animal;
 
 public class JungleGame {
     private GameBoard board;
@@ -7,21 +8,18 @@ public class JungleGame {
         this.board = new GameBoard();
     }
 
-    /*
-    updateView() is called each time some change is made final.
-    -> It tells the view what to display next.
-     */
-    public void updateView(View view){
-        view.displayGameUpdate(this.board);
+    public GameBoard getGameBoard(){
+        return this.board;
     }
 
     /*
     newInput() is called each time the Controller registers a new user input.
-    -> checks the semantic correctness of the input (on the Board) and
-    applies the changes.
+    -> passes the command on to the Animal that than checks the correctness of the move and performs it if so!
+    Returns String with: move successful || move not successful
      */
-    public void newInput(String animal, int x_value, int y_value){
-        //TODO check ipus syntactically and implement the logic behind it!
+    public boolean newInput(String animal, int x_value, int y_value) {
+        // the players turn is determined by the animals "name".
+        Animal actual = this.board.getAnimal(animal);
+        return actual.move(x_value, y_value); // returns true if move was successful!
     }
-
 }
