@@ -38,7 +38,7 @@ public class Controller {
                 view.displayMessage("ERROR: Input has wrong format: use *piece name*-*x_coordinate*-*y_coordinate* and try again: ");
                 success = false;
             }
-            else if((game.getGameBoard().stillAlive(turnCount%2 == 1, animalXY[0]))){
+            else if((game.getGameBoard().stillAlive(turnCount % 2 == 1, animalXY[0]))){
                 view.displayMessage("ERROR: Player abc use alphabetical characters, Player int please use the numbers");
                 success = false;
             }

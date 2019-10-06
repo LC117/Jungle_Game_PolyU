@@ -10,16 +10,11 @@ public class Animal{
     private GameBoard gameBoard;
 
     public Animal (int x_location, int y_location, boolean frontPlayer, int strength, GameBoard gameBoard){
-       if (!isMoveLegal(x_location, y_location)) {
-           System.out.println("initialization Parameters are wrong!");
-           System.exit(-1);
-       } else {
            this.gameBoard = gameBoard;
            this.x_location = x_location;
            this.y_location = y_location;
            this.frontPlayer = frontPlayer;
            this.strength = strength;
-       }
     }
 
     public int getStrength(){
@@ -64,10 +59,10 @@ public class Animal{
         if (!isMoveLegal(x_new, y_new)) {
             return false;
         }
-        boolean top = this.x_location == x_new && this.y_location == x_new - 1;
-        boolean left = this.x_location == x_new + 1 && this.y_location == x_new;
-        boolean right = this.x_location == x_new - 1 && this.y_location == x_new;
-        boolean bottom = this.x_location == x_new && this.y_location == x_new + 1;
+        boolean top = this.x_location == x_new && this.y_location == y_new - 1;
+        boolean left = this.x_location == x_new + 1 && this.y_location == y_new;
+        boolean right = this.x_location == x_new - 1 && this.y_location == y_new;
+        boolean bottom = this.x_location == x_new && this.y_location == y_new + 1;
         //TODO check if on the fiels is another animal (own or stronger enemy one)
         if(top || left || right || bottom){
             int from_x = this.x_location;
@@ -91,6 +86,7 @@ public class Animal{
             return this.strength + "";
         }
     }
+
     public boolean getFrontPlayer(){
         return this.frontPlayer;
     }

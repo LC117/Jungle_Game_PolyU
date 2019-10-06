@@ -1,8 +1,5 @@
 package hk.edu.polyu.comp.comp2021.jungle.model;
-
 import hk.edu.polyu.comp.comp2021.jungle.model.pieces.*;
-
-import java.util.Arrays;
 
 /*
 "GameBoard" is a two-dimensional array containing the single pieces:
@@ -95,26 +92,24 @@ public class GameBoard {
         return this.boardArray;
     }
 
-
     public Animal getAnimal(String animal){
         boolean frontPlayer = animal.charAt(0) < 60;
         if(frontPlayer){ //animal: [1-8] is appartaining to frontPlayer
-            return this.playerFront[Integer.parseInt(animal)];
+            return this.playerFront[Integer.parseInt(animal)-1];
         }else{
             int animalNumber;
             animalNumber = animal.charAt(0) - 97;
-            return this.playerFront[animalNumber];
+            return this.playerBack[animalNumber];
         }
     }
 
-
     public Animal getAnimal(int x, int y){
-
+            // the != null Statement in the if beginning assures that the animal is still alive
             for (int i = 0; i < 8; i++) {
-                if (playerFront[i].getX_location() == x && playerFront[i].getY_location() == y){
+                if (playerFront[i] != null && playerFront[i].getX_location() == x && playerFront[i].getY_location() == y){
                     return playerFront[i];
                 }
-                if (playerBack[i].getX_location() == x && playerBack[i].getY_location() == y){
+                if (playerBack[i] != null && playerBack[i].getX_location() == x && playerBack[i].getY_location() == y){
                     return playerBack[i];
                 }
             }
@@ -146,23 +141,6 @@ public class GameBoard {
         }
     }
 
-
-    public boolean stillAlive(boolean frontplayer, String animal){
-        Animal [] actual;
-        if (frontplayer){
-            actual = playerFront;
-        }else{
-            actual = playerBack;
-        }
-        for (int i = 0; i < 8; i++) {
-            if(actual[i] != null && actual[i].toString().equals(animal)){
-                return true;
-            }
-        }
-        return false;
-+
-    }
-
     public boolean stillAlive(boolean frontplayer, String animal){
         Animal [] actual;
         if (frontplayer){
@@ -177,16 +155,14 @@ public class GameBoard {
         }
         return false;
     }
-
 
     public Animal [] getplayerFront(){
         return playerFront;
     }
+
     public Animal [] getPlayerBack(){
         return this.playerBack;
     }
-
-
 
     @Override
     public String toString(){
@@ -199,7 +175,7 @@ public class GameBoard {
             //boardString += i + " " + Arrays.toString(this.boardArray[i]) + "\n";
             boardString += i + "| ";
             for(int x = 6; x >=0; x--){
-                boardString += boardArray[i][x] + " ";
+                boardString += boardArray[i][6-x] + " ";
             }
             boardString += " \n";
         }
