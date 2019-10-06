@@ -1,5 +1,6 @@
 package hk.edu.polyu.comp.comp2021.jungle.controller;
 import hk.edu.polyu.comp.comp2021.jungle.model.JungleGame;
+import hk.edu.polyu.comp.comp2021.jungle.model.pieces.Animal;
 import hk.edu.polyu.comp.comp2021.jungle.view.View;
 import java.util.Scanner;
 import java.util.Arrays;
@@ -11,7 +12,6 @@ public class Controller {
     Expected format: "*first 3 letter of animal name*-*x_coordinate*-*y_coordinate*"
     */
     public void playGame(View view, JungleGame game){
-        view.displayGameUpdate(game.getGameBoard());
         Scanner scanner = new Scanner(System.in);
         String input;
         String [] animalXY; // the input String that is split on "-".
@@ -28,7 +28,7 @@ public class Controller {
 
             if(success){
                 view.displayMessage("Turn: " + turnCount);
-                game.updateView(view);}
+                view.displayGameUpdate(game.getGameBoard());}
 
             view.displayMessage(turnMessage);
             view.displayMessage("");
@@ -38,7 +38,7 @@ public class Controller {
                 view.displayMessage("ERROR: Input has wrong format: use *piece name*-*x_coordinate*-*y_coordinate* and try again: ");
                 success = false;
             }
-            else if(!typeCheck(playerName, animalXY[0])){
+            else if((game.getGameBoard().stillAlive(turnCount%2 == 1, animalXY[0]))){
                 view.displayMessage("ERROR: Player abc use alphabetical characters, Player int please use the numbers");
                 success = false;
             }
@@ -52,6 +52,21 @@ public class Controller {
                 }
                 else if(playerName.equals("abc")){
                     playerName = "int";
+
+
+                if(endGame(turnCount%2 == 1, game)){
+                    gameState = false;
+                    String winner;
+                    if(turnCount%2 == 1){
+                        winner = "int";
+                    }
+                    else{
+                        winner = "abc";
+                    }
+                    view.displayMessage(">>>>>Player " + winner + " is Victorious<<<<<<");
+                }
+
+
                 }
             }
         }
@@ -71,28 +86,26 @@ public class Controller {
         }
         boolean nameOk = input[0].length() == 1;
         return lengthOk && nameOk;
-    }
-
-    private boolean typeCheck(String playerName, String pieceName){
-        String [] intPieces =   {"1", "2", "3", "4", "5", "6", "7", "8"};
-        String [] abcPieces = {"a", "b", "c", "d", "e", "f", "g", "h"};
+    }  
 
 
-        if(playerName.equals("int")){
-            for (String element : intPieces) {
-                if (element.equals(pieceName)) {
-                    return true;
-                }
+    private boolean endGame(boolean playerTurn, JungleGame game){
+
+        Animal [] playerPieces;
+
+        if(playerTurn){
+            playerPieces = game.getGameBoard().getplayerFront();
+        }
+        else{
+            playerPieces = game.getGameBoard().getPlayerBack();
+        }
+        for(Animal an: playerPieces){
+            if(an != null){
+                return false;
             }
         }
-        else if(playerName.equals("abc")){
-            for (String element : abcPieces) {
-                if (element.equals(pieceName)) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return true;
     }
+
 
 }

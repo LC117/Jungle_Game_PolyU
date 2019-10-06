@@ -95,8 +95,9 @@ public class GameBoard {
         return this.boardArray;
     }
 
+
     public Animal getAnimal(String animal){
-        boolean frontPlayer = animal.charAt(0) > 60;
+        boolean frontPlayer = animal.charAt(0) < 60;
         if(frontPlayer){ //animal: [1-8] is appartaining to frontPlayer
             return this.playerFront[Integer.parseInt(animal)];
         }else{
@@ -106,13 +107,7 @@ public class GameBoard {
         }
     }
 
-<<<<<<< Updated upstream
-    public void moveAnimal(Animal movedAnimal){ //Parameter is the Animal with its new location.
-        //TODO
-    }
-    public void removeAnimal(Animal eatenAnimal){
-        //TODO -> or to think how to implement
-=======
+
     public Animal getAnimal(int x, int y){
 
             for (int i = 0; i < 8; i++) {
@@ -130,7 +125,9 @@ public class GameBoard {
         boardArray[from_y][from_x] = boardArray[from_x][from_y].charAt(0) + "_" + boardArray[from_x][from_y].charAt(2);
         boardArray[movedAnimal.getY_location()][ movedAnimal.getX_location()] = boardArray[from_x][from_y].charAt(0) + movedAnimal.toString() + boardArray[from_x][from_y].charAt(2);
     }
+    
     public void removeAnimal(Animal eatenAnimal){
+
         if(eatenAnimal.getFrontPlayer()){
             for (int i = 0; i < 8; i++) {
                 if (playerFront[i].equals(eatenAnimal)){
@@ -163,16 +160,52 @@ public class GameBoard {
             }
         }
         return false;
->>>>>>> Stashed changes
++
     }
+
+    public boolean stillAlive(boolean frontplayer, String animal){
+        Animal [] actual;
+        if (frontplayer){
+            actual = playerFront;
+        }else{
+            actual = playerBack;
+        }
+        for (int i = 0; i < 8; i++) {
+            if(actual[i] != null && actual[i].toString().equals(animal)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    public Animal [] getplayerFront(){
+        return playerFront;
+    }
+    public Animal [] getPlayerBack(){
+        return this.playerBack;
+    }
+
+
 
     @Override
     public String toString(){
         String boardString = "";
         for (int i = 8; i >= 0; i--) {
-            boardString += i + " " + Arrays.toString(this.boardArray[i]) + "\n";
+
+            //boardString += Arrays.toString(this.boardArray[i]) + "\n";
+
+
+            //boardString += i + " " + Arrays.toString(this.boardArray[i]) + "\n";
+            boardString += i + "| ";
+            for(int x = 6; x >=0; x--){
+                boardString += boardArray[i][x] + " ";
+            }
+            boardString += " \n";
         }
-        boardString += "    0    1    2    3    4    5    6 ";
+        boardString += "_|_____________________________ \n";
+        boardString += " |  0   1   2   3   4   5   6 ";
+
         return boardString;
     }
 }
