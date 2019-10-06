@@ -159,8 +159,8 @@ public class GameBoard {
         String boardString = "";
         for (int i = 8; i >= 0; i--) {
 
-            boardString += Arrays.toString(this.boardArray[i]) + "\n";
-        }
+            //boardString += Arrays.toString(this.boardArray[i]) + "\n";
+
 
             //boardString += i + " " + Arrays.toString(this.boardArray[i]) + "\n";
             boardString += i + "| ";
@@ -172,9 +172,6 @@ public class GameBoard {
         boardString += "_|_____________________________ \n";
         boardString += " |  0   1   2   3   4   5   6 ";
 
-            boardString += i + " " + Arrays.toString(this.boardArray[i]) + "\n";
-        }
-        boardString += "    0    1    2    3    4    5    6 ";
         return boardString;
     }
 }
