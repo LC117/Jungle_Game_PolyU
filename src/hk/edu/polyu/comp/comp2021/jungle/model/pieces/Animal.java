@@ -91,5 +91,8 @@ public class Animal{
             return this.strength + "";
         }
     }
+    public boolean getFrontPlayer(){
+        return this.frontPlayer;
+    }
 }
 
