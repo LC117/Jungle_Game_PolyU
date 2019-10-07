@@ -3,6 +3,7 @@
 .idea/misc.xml
 .idea/modules.xml
 .idea/workspace.xml
+.idea/Jungle_Game_PolyU.iml
 
 out/production/Jungle_Game_PolyU/hk/edu/polyu/comp/comp2021/jungle/Application.class
 out/production/Jungle_Game_PolyU/hk/edu/polyu/comp/comp2021/jungle/model/GameBoard.class
@@ -20,7 +21,3 @@ out/production/Jungle_Game_PolyU/hk/edu/polyu/comp/comp2021/jungle/model/pieces/
 out/production/Jungle_Game_PolyU/hk/edu/polyu/comp/comp2021/jungle/model/pieces/Wolf.class
 out/production/Jungle_Game_PolyU/hk/edu/polyu/comp/comp2021/jungle/view/GameBoard.class
 
-.idea/misc.xml
-.idea/misc.xml
-.idea/workspace.xml
-.idea/Jungle_Game_PolyU.iml
