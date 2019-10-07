@@ -1,8 +1,5 @@
 package hk.edu.polyu.comp.comp2021.jungle.model;
-
 import hk.edu.polyu.comp.comp2021.jungle.model.pieces.*;
-
-import java.util.Arrays;
 
 /*
 "GameBoard" is a two-dimensional array containing the single pieces:
@@ -63,23 +60,23 @@ public class GameBoard {
     } // Constructor
 
     private void initializeAnimals(){
-        playerFront[0] = new Rat(6, 2, true);
-        playerFront[1] = new Cat(1, 1 ,true);
-        playerFront[2] = new Dog(5, 1, true);
-        playerFront[3] = new Wolf(2, 2, true);
-        playerFront[4] = new Leopard(4, 2, true);
-        playerFront[5] = new Tiger (0, 0, true);
-        playerFront[6] = new Lion (6, 0, true);
-        playerFront[7] = new Elephant(0, 2, true);
+        playerFront[0] = new Rat(6, 2, true, this);
+        playerFront[1] = new Cat(1, 1 ,true, this);
+        playerFront[2] = new Dog(5, 1, true, this);
+        playerFront[3] = new Wolf(2, 2, true, this);
+        playerFront[4] = new Leopard(4, 2, true,this);
+        playerFront[5] = new Tiger (0, 0, true, this);
+        playerFront[6] = new Lion (6, 0, true, this);
+        playerFront[7] = new Elephant(0, 2, true, this);
 
-        playerBack[0] = new Rat(0, 6, false);
-        playerBack[1] = new Cat(5, 7, false);
-        playerBack[2] = new Dog(1, 7, false);
-        playerBack[3] = new Wolf(4, 6, false);
-        playerBack[4] = new Leopard(2, 6, false);
-        playerBack[5] = new Tiger(6, 8, false);
-        playerBack[6] = new Lion(0, 8, false);
-        playerBack[7] = new Elephant(6, 6, false);
+        playerBack[0] = new Rat(0, 6, false, this);
+        playerBack[1] = new Cat(5, 7, false, this);
+        playerBack[2] = new Dog(1, 7, false, this);
+        playerBack[3] = new Wolf(4, 6, false, this);
+        playerBack[4] = new Leopard(2, 6, false, this);
+        playerBack[5] = new Tiger(6, 8, false, this);
+        playerBack[6] = new Lion(0, 8, false, this);
+        playerBack[7] = new Elephant(6, 6, false, this);
 
         for (int i = 0; i < 8; i++) {
             insert(playerFront[i]);
@@ -95,22 +92,39 @@ public class GameBoard {
         return this.boardArray;
     }
 
-
     public Animal getAnimal(String animal){
         boolean frontPlayer = animal.charAt(0) < 60;
         if(frontPlayer){ //animal: [1-8] is appartaining to frontPlayer
-            return this.playerFront[Integer.parseInt(animal)];
+            return this.playerFront[Integer.parseInt(animal)-1];
         }else{
             int animalNumber;
             animalNumber = animal.charAt(0) - 97;
-            return this.playerFront[animalNumber];
+            return this.playerBack[animalNumber];
         }
     }
 
-    public void moveAnimal(Animal movedAnimal){ //Parameter is the Animal with its new location. Is called by the Animal class to submit change.
-        //TODO
+    public Animal getAnimal(int x, int y){
+            // the != null Statement in the if beginning assures that the animal is still alive
+            for (int i = 0; i < 8; i++) {
+                if (playerFront[i] != null && playerFront[i].getX_location() == x && playerFront[i].getY_location() == y){
+                    return playerFront[i];
+                }
+                if (playerBack[i] != null && playerBack[i].getX_location() == x && playerBack[i].getY_location() == y){
+                    return playerBack[i];
+                }
+            }
+            return null;
     }
+
+    public void moveAnimal(int from_x, int from_y, Animal movedAnimal){ //Parameter is the Animal with its new location. Is called by the Animal class to submit change.
+        String temp = boardArray[from_y][from_x];
+        boardArray[from_y][from_x] = temp.charAt(0) + "_" + temp.charAt(2);
+        temp = boardArray[movedAnimal.getY_location()][ movedAnimal.getX_location()];
+        boardArray[movedAnimal.getY_location()][ movedAnimal.getX_location()] = temp.charAt(0) + movedAnimal.toString() + temp.charAt(2);
+    }
+    
     public void removeAnimal(Animal eatenAnimal){
+
         if(eatenAnimal.getFrontPlayer()){
             for (int i = 0; i < 8; i++) {
                 if (playerFront[i].equals(eatenAnimal)){
@@ -129,7 +143,7 @@ public class GameBoard {
         }
     }
 
-    public boolean stillAlive(boolean frontplayer, String animal){
+    public boolean animalStillAlive(boolean frontplayer, String animal){
         Animal [] actual;
         if (frontplayer){
             actual = playerFront;
@@ -144,15 +158,13 @@ public class GameBoard {
         return false;
     }
 
-
     public Animal [] getplayerFront(){
         return playerFront;
     }
+
     public Animal [] getPlayerBack(){
         return this.playerBack;
     }
-
-
 
     @Override
     public String toString(){
@@ -165,7 +177,7 @@ public class GameBoard {
             //boardString += i + " " + Arrays.toString(this.boardArray[i]) + "\n";
             boardString += i + "| ";
             for(int x = 6; x >=0; x--){
-                boardString += boardArray[i][x] + " ";
+                boardString += boardArray[i][6-x] + " ";
             }
             boardString += " \n";
         }

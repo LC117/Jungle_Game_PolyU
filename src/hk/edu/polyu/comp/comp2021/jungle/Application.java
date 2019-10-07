@@ -6,9 +6,9 @@ import hk.edu.polyu.comp.comp2021.jungle.view.View ; //View
 public class Application {
     public static void main(String[] args){
         JungleGame game = new JungleGame(); // this is the Model, but we should only access the Controller
-        Controller controller = new Controller();
         View view = new View();
+        Controller controller = new Controller(view, game);
         // start playing the game
-        controller.playGame(view, game); // we consider this the first input from the user.
+        controller.playGame();
     }
 }
