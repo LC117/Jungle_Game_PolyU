@@ -20,6 +20,10 @@ public class JungleGame {
     public boolean newInput(String animal, int x_value, int y_value) {
         // the players turn is determined by the animals "name".
         Animal actual = this.board.getAnimal(animal);
+        //check if animal is alive!
+        if (actual == null){
+            return false;
+        }
         return actual.move(x_value, y_value); // returns true if move was successful!
     }
 }

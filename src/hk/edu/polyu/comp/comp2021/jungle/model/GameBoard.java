@@ -117,8 +117,10 @@ public class GameBoard {
     }
 
     public void moveAnimal(int from_x, int from_y, Animal movedAnimal){ //Parameter is the Animal with its new location. Is called by the Animal class to submit change.
-        boardArray[from_y][from_x] = boardArray[from_x][from_y].charAt(0) + "_" + boardArray[from_x][from_y].charAt(2);
-        boardArray[movedAnimal.getY_location()][ movedAnimal.getX_location()] = boardArray[from_x][from_y].charAt(0) + movedAnimal.toString() + boardArray[from_x][from_y].charAt(2);
+        String temp = boardArray[from_y][from_x];
+        boardArray[from_y][from_x] = temp.charAt(0) + "_" + temp.charAt(2);
+        temp = boardArray[movedAnimal.getY_location()][ movedAnimal.getX_location()];
+        boardArray[movedAnimal.getY_location()][ movedAnimal.getX_location()] = temp.charAt(0) + movedAnimal.toString() + temp.charAt(2);
     }
     
     public void removeAnimal(Animal eatenAnimal){
@@ -141,7 +143,7 @@ public class GameBoard {
         }
     }
 
-    public boolean stillAlive(boolean frontplayer, String animal){
+    public boolean animalStillAlive(boolean frontplayer, String animal){
         Animal [] actual;
         if (frontplayer){
             actual = playerFront;

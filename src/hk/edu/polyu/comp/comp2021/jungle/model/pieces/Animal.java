@@ -46,7 +46,7 @@ public class Animal{
         }else if (collisionAnimal.strength <= this.strength){ //other Animal will be eaten!
             animalInWay = false;
         }
-        return !water || inBounds || !ownDen || !animalInWay; // not in water, in Bound, not on OWN Den, not on own Animal, not stronger enemy Animal!
+        return !water && inBounds && !ownDen && !animalInWay; // not in water, in Bound, not on OWN Den, not on own Animal, not stronger enemy Animal!
     }
 
     /*
@@ -65,14 +65,14 @@ public class Animal{
         boolean bottom = this.x_location == x_new && this.y_location == y_new + 1;
         //TODO check if on the fiels is another animal (own or stronger enemy one)
         if(top || left || right || bottom){
+            if(gameBoard.getAnimal(x_new, y_new) != null) { // this test is ok here because in is MoveLegal() we only left open if there is a weaker animal.
+                gameBoard.removeAnimal(gameBoard.getAnimal(x_new, y_new));//remove eaten animal
+            }
             int from_x = this.x_location;
             int from_y = this.y_location;
             this.x_location = x_new;
             this.y_location = y_new;
             gameBoard.moveAnimal(from_x, from_y, this);
-            if(gameBoard.getAnimal(x_new, y_new) != null) { // this test is ok here because in is MoveLegal() we only left open if there is a weaker animal.
-                gameBoard.removeAnimal(gameBoard.getAnimal(x_new, y_new));//remove eaten animal
-            }
             return true;
         }
         return false;
