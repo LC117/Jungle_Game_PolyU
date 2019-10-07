@@ -31,7 +31,7 @@ public class Controller {
             //TODO: test if winner is determined correctly!
             if(winner(turnCount % 2 == 0)){
                 // example: front player is at turn => check if he was defeated in the last turn!
-                    String lastPlayer = (turnCount % 2 == 0)? ("back player"): ("front player");
+                    String lastPlayer = (frontPlayersTurn(turnCount))? ("back player"): ("front player");
                     view.displayMessage(">>>>>Player " + lastPlayer + " is Victorious<<<<<<");
                     break; //Game Ends
             }
