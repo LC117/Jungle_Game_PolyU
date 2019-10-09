@@ -143,15 +143,12 @@ public class GameBoard {
         }
     }
 
-    public boolean animalStillAlive(boolean frontplayer, String animal){
-        Animal [] actual;
-        if (frontplayer){
-            actual = playerFront;
-        }else{
-            actual = playerBack;
-        }
+    public boolean animalStillAlive(String animal){
+
         for (int i = 0; i < 8; i++) {
-            if(actual[i] != null && actual[i].toString().equals(animal)){
+            if(playerFront[i] != null && playerFront[i].toString().equals(animal)){
+                return true;
+            }else if (playerBack[i] != null && playerBack[i].toString().equals(animal)){
                 return true;
             }
         }

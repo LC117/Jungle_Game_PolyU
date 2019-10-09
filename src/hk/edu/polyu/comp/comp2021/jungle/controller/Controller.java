@@ -3,7 +3,7 @@ import hk.edu.polyu.comp.comp2021.jungle.model.JungleGame;
 import hk.edu.polyu.comp.comp2021.jungle.model.pieces.Animal;
 import hk.edu.polyu.comp.comp2021.jungle.view.View;
 import java.util.Scanner;
-import java.util.Arrays;
+
 public class Controller {
     private View view;
     private JungleGame game;
@@ -63,12 +63,19 @@ public class Controller {
     private boolean inputFormatOk(String [] input, int turnCount){
         boolean lengthOk;
         boolean nameOk;
+        //test input array length:
         lengthOk = input.length == 3;
+        //assure the input is not empty, because get the "first" char will throw NullP. error.
+        if(input[0].equals("") || input[1].equals("") || input[2].equals("")){
+            view.displayMessage("Please fill in all properties!");
+            return false;
+        }
 
         try{//check if coordinates are Integers
             Integer.parseInt(input[1]);
             Integer.parseInt(input[2]);
         }catch (Exception e){
+            view.displayMessage("X and Y coordinates have to be numbers!");
             return false;
         }
 
