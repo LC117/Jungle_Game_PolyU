@@ -1,18 +1,19 @@
 package hk.edu.polyu.comp.comp2021.jungle.model;
 
-import hk.edu.polyu.comp.comp2021.jungle.model.JungleGame;
-import org.junit.Test;
+
+import org.junit.jupiter.api.*;
+
 
 
 public class JungleGameTest {
-    @org.junit.Before
+    @BeforeAll
     public void setUp() throws Exception {
 
     }
 
     @Test
     public void testJungleGameConstructor(){
-        JungleGame game = new JunglseGame();
+        JungleGame game = new JungleGame();
         assert true;
     }
 
