@@ -23,7 +23,21 @@ public class Controller {
         String input;
         String [] animalXY; // the input String that is split on "-".
         int turnCount = 0;
+        String frontPlayerName;
+        String backPlayerName;
         String actualPlayerName;
+
+        //Check if a saved game should be loaded:
+        view.displayMessage("Welcome! \nDo you want to load a saved game? [y/n]");
+        if(getYesOrNo()) {// yes = true
+            loadGame();
+            //TODO: the saved game has to be implemented!
+        }
+
+        view.displayMessage("Player in the front, please input your name:");
+        frontPlayerName = getPlayerName();
+        view.displayMessage("Player in the back, please input your name:");
+        backPlayerName = getPlayerName();
 
         while (true){// each iteration resembles one turn
             view.displayMessage("Turn: " + turnCount);
@@ -35,11 +49,12 @@ public class Controller {
                     view.displayMessage(">>>>>Player " + lastPlayer + " is Victorious<<<<<<");
                     break; //Game Ends
             }
-            actualPlayerName = (frontPlayersTurn(turnCount))? ("front (int)"): ("back (abc)"); //decides the actual players name!
+            actualPlayerName = (frontPlayersTurn(turnCount))? (frontPlayerName): (backPlayerName); //decides the actual players name!
             view.displayMessage("Player " + actualPlayerName + ", please use *piece name*-*x_coordinate*-*y_coordinate* to move your piece: \n");
 
             //read user input: til correct execution possible
             while(true){
+                //TODO: check for "save", "open" or "move" command!
                 input = scanner.nextLine();
                 animalXY = input.split("-");
                 if(inputFormatOk(animalXY, turnCount)){
@@ -108,6 +123,36 @@ public class Controller {
             }
         }
         return true;
+    }
+
+    private void loadGame(){
+        //TODO: the logic needs to be implemented!
+    }
+
+    private boolean getYesOrNo() {
+        Scanner scanner = new Scanner(System.in);
+        String input;
+        while (true) {
+            input = scanner.nextLine();
+            if (input.length() == 1 && input.charAt(0) == 121) {
+                return true;
+            } else if (input.length() == 1 && input.charAt(0) == 110) {
+                return false;
+            } else {
+                view.displayMessage("Please retry: [y/n]");
+            }
+        }
+    }
+
+    private String getPlayerName(){
+        Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine();
+        if(input.length() > 0){
+            return input;
+        }
+        else{
+            return getPlayerName();
+        }
     }
 
     private boolean frontPlayersTurn(int turnCount){
