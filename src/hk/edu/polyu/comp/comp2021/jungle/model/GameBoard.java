@@ -29,6 +29,22 @@ public class GameBoard {
     private Animal [] playerBack = new Animal[8];
 
     public GameBoard() {
+        setUpGameBoard();
+        initializeAnimals();
+    } // Constructor
+
+    public GameBoard(Animal [] playerFront, Animal [] playerBack){ //
+        setUpGameBoard();
+        this.playerFront = playerFront;
+        this.playerBack = playerBack;
+        for (int i = 0; i < 8; i++) {
+            insert(playerFront[i]);
+            insert(playerBack[i]);
+        }
+
+    }
+
+    private void setUpGameBoard(){
         for(int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 if (y == 0 || y == height - 1) {
@@ -56,8 +72,7 @@ public class GameBoard {
                 }
             }
         }
-        initializeAnimals();
-    } // Constructor
+    }
 
     private void initializeAnimals(){
         playerFront[0] = new Rat(6, 2, true, this);
@@ -172,14 +187,14 @@ public class GameBoard {
 
 
             //boardString += i + " " + Arrays.toString(this.boardArray[i]) + "\n";
-            boardString += i + "| ";
+            boardString += (i+1) + "| ";
             for(int x = 6; x >=0; x--){
                 boardString += boardArray[i][6-x] + " ";
             }
             boardString += " \n";
         }
         boardString += "_|_____________________________ \n";
-        boardString += " |  0   1   2   3   4   5   6 ";
+        boardString += " |  A   B   C   D   E   F   G ";
 
         return boardString;
     }
