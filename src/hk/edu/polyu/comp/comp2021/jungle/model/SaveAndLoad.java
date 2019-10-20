@@ -1,5 +1,6 @@
 package hk.edu.polyu.comp.comp2021.jungle.model;
 
+import org.json.*;
 //TODO: should me in model!
 public class SaveAndLoad {
 
@@ -7,7 +8,7 @@ public class SaveAndLoad {
 
     }
     private void saveGame (String path){
-
+        JSONObject jo = new JSONObject();
     }
 
     public static void main(String[] args) {
