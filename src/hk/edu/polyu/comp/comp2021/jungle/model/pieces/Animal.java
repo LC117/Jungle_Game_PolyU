@@ -35,6 +35,7 @@ public class Animal{
         boolean water = (y == 3 || y == 4 || y == 5) && (x == 1 || x == 2 || x == 4 || x == 5);
         boolean ownDen = frontPlayer ? (x == 3 && y == 0) : (x == 3 && y == 8);
         boolean animalInWay = false; //true if: stronger Enemy, own animal
+        boolean onLand = !((this.y_location == 3 || this.y_location == 4 || this.y_location == 5) && (this.x_location == 1 || this.x_location == 2 || this.x_location == 4 || this.x_location == 5));
         Animal collisionAnimal = gameBoard.getAnimal(x, y);
         if (collisionAnimal == null){
             animalInWay = false;
@@ -46,6 +47,51 @@ public class Animal{
         }else if (collisionAnimal.strength <= this.strength){ //other Animal will be eaten!
             animalInWay = false;
         }
+
+        //allows the rat to traverse on water and eat the elephant
+        if(water && this.strength == 1){
+            water = false;
+        }
+        if(collisionAnimal != null){
+            if(collisionAnimal.strength == 8 && collisionAnimal.getFrontPlayer() != frontPlayer && onLand){
+                animalInWay = false;
+            }
+        }
+
+        //Lion and Tiger jumps over the river (Move this to Lion and Tiger classes)
+        if(water && (this.strength == 3 || this.strength == 7)){
+            boolean vertical = false;
+            boolean up = true;
+            if(this.y_location == y){
+                vertical = true;
+            }
+            if((this.y_location > y) || (this.x_location > x)){
+                up = false;
+            }
+            while(water){
+                if(vertical){
+                    if(up)
+                        y +=1;
+                    else
+                        y -=1;
+                    water = (y == 3 || y == 4 || y == 5) && (x == 1 || x == 2 || x == 4 || x == 5);
+                }
+                else{
+                    if(up)
+                        x +=1;
+                    else
+                        x -=1;
+                    water = (y == 3 || y == 4 || y == 5) && (x == 1 || x == 2 || x == 4 || x == 5);
+                }
+
+            }
+
+        }
+
+
+
+
+
         return !water && inBounds && !ownDen && !animalInWay; // not in water, in Bound, not on OWN Den, not on own Animal, not stronger enemy Animal!
     }
 
@@ -89,6 +135,9 @@ public class Animal{
 
     public boolean getFrontPlayer(){
         return this.frontPlayer;
+    }
+    public GameBoard getGameBoard(){
+        return  this.gameBoard;
     }
 }
 
