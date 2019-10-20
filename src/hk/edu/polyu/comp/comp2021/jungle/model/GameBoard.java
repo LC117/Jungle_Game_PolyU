@@ -22,29 +22,35 @@ import hk.edu.polyu.comp.comp2021.jungle.model.pieces.*;
     -> if the location is possible is done by calling the move() function that performs the move if possible.
  */
 public class GameBoard {
-    private static int height = 9;
-    private static int width = 7;
-    private String [][] boardArray = new String [height][width]; // y, x -> like this because of the printing
-    private Animal [] playerFront = new Animal[8];
-    private Animal [] playerBack = new Animal[8];
+    private String [][] boardArray; // y, x -> like this because of the printing
+    private Animal [] playerFrontAnimals = new Animal[8];
+    private Animal [] playerBackAnimals = new Animal[8];
 
     public GameBoard() {
-        setUpGameBoard();
+        this.boardArray = setUpGameBoard();
         initializeAnimals();
-    } // Constructor
+    }
+    public GameBoard(Animal [] playerFrontAnimals, Animal [] playerBackAnimals, String [][] boardArray  ) {
+        this.boardArray = boardArray;
+        this.playerFrontAnimals = playerFrontAnimals;
+        this.playerBackAnimals = playerBackAnimals;
+    }
 
-    public GameBoard(Animal [] playerFront, Animal [] playerBack){ //
+    public void resetGameBoard(Animal [] playerFrontAnimals, Animal [] playerBackAnimals){ //
         setUpGameBoard();
-        this.playerFront = playerFront;
-        this.playerBack = playerBack;
+        this.playerFrontAnimals = playerFrontAnimals;
+        this.playerBackAnimals = playerBackAnimals;
         for (int i = 0; i < 8; i++) {
-            insert(playerFront[i]);
-            insert(playerBack[i]);
+            insert(playerFrontAnimals[i]);
+            insert(playerBackAnimals[i]);
         }
 
     }
 
-    private void setUpGameBoard(){
+    private String [][] setUpGameBoard(){
+        int height = 9;
+        int width = 7;
+        String [][] boardArray = new String [height][width];
         for(int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 if (y == 0 || y == height - 1) {
@@ -72,30 +78,32 @@ public class GameBoard {
                 }
             }
         }
+        return boardArray;
     }
 
     private void initializeAnimals(){
-        playerFront[0] = new Rat(6, 2, true, this);
-        playerFront[1] = new Cat(1, 1 ,true, this);
-        playerFront[2] = new Dog(5, 1, true, this);
-        playerFront[3] = new Wolf(2, 2, true, this);
-        playerFront[4] = new Leopard(4, 2, true,this);
-        playerFront[5] = new Tiger (0, 0, true, this);
-        playerFront[6] = new Lion (6, 0, true, this);
-        playerFront[7] = new Elephant(0, 2, true, this);
 
-        playerBack[0] = new Rat(0, 6, false, this);
-        playerBack[1] = new Cat(5, 7, false, this);
-        playerBack[2] = new Dog(1, 7, false, this);
-        playerBack[3] = new Wolf(4, 6, false, this);
-        playerBack[4] = new Leopard(2, 6, false, this);
-        playerBack[5] = new Tiger(6, 8, false, this);
-        playerBack[6] = new Lion(0, 8, false, this);
-        playerBack[7] = new Elephant(6, 6, false, this);
+        playerFrontAnimals[0] = new Rat(6, 2, true, this);
+        playerFrontAnimals[1] = new Cat(1, 1 ,true, this);
+        playerFrontAnimals[2] = new Dog(5, 1, true, this);
+        playerFrontAnimals[3] = new Wolf(2, 2, true, this);
+        playerFrontAnimals[4] = new Leopard(4, 2, true,this);
+        playerFrontAnimals[5] = new Tiger (0, 0, true, this);
+        playerFrontAnimals[6] = new Lion (6, 0, true, this);
+        playerFrontAnimals[7] = new Elephant(0, 2, true, this);
+
+        playerBackAnimals[0] = new Rat(0, 6, false, this);
+        playerBackAnimals[1] = new Cat(5, 7, false, this);
+        playerBackAnimals[2] = new Dog(1, 7, false, this);
+        playerBackAnimals[3] = new Wolf(4, 6, false, this);
+        playerBackAnimals[4] = new Leopard(2, 6, false, this);
+        playerBackAnimals[5] = new Tiger(6, 8, false, this);
+        playerBackAnimals[6] = new Lion(0, 8, false, this);
+        playerBackAnimals[7] = new Elephant(6, 6, false, this);
 
         for (int i = 0; i < 8; i++) {
-            insert(playerFront[i]);
-            insert(playerBack[i]);
+            insert(playerFrontAnimals[i]);
+            insert(playerBackAnimals[i]);
         }
     }
 
@@ -110,22 +118,22 @@ public class GameBoard {
     public Animal getAnimal(String animal){
         boolean frontPlayer = animal.charAt(0) < 60;
         if(frontPlayer){ //animal: [1-8] is appartaining to frontPlayer
-            return this.playerFront[Integer.parseInt(animal)-1];
+            return this.playerFrontAnimals[Integer.parseInt(animal)-1];
         }else{
             int animalNumber;
             animalNumber = animal.charAt(0) - 97;
-            return this.playerBack[animalNumber];
+            return this.playerBackAnimals[animalNumber];
         }
     }
 
     public Animal getAnimal(int x, int y){
             // the != null Statement in the if beginning assures that the animal is still alive
             for (int i = 0; i < 8; i++) {
-                if (playerFront[i] != null && playerFront[i].getX_location() == x && playerFront[i].getY_location() == y){
-                    return playerFront[i];
+                if (playerFrontAnimals[i] != null && playerFrontAnimals[i].getX_location() == x && playerFrontAnimals[i].getY_location() == y){
+                    return playerFrontAnimals[i];
                 }
-                if (playerBack[i] != null && playerBack[i].getX_location() == x && playerBack[i].getY_location() == y){
-                    return playerBack[i];
+                if (playerBackAnimals[i] != null && playerBackAnimals[i].getX_location() == x && playerBackAnimals[i].getY_location() == y){
+                    return playerBackAnimals[i];
                 }
             }
             return null;
@@ -142,16 +150,16 @@ public class GameBoard {
 
         if(eatenAnimal.getFrontPlayer()){
             for (int i = 0; i < 8; i++) {
-                if (playerFront[i].equals(eatenAnimal)){
-                    playerFront[i] = null; // animal is gone
+                if (playerFrontAnimals[i].equals(eatenAnimal)){
+                    playerFrontAnimals[i] = null; // animal is gone
                     return;
                 }
             }
         }
         else {
             for (int i = 0; i < 8; i++) {
-                if (playerBack[i].equals(eatenAnimal)){
-                    playerBack[i] = null; // animal is gone
+                if (playerBackAnimals[i].equals(eatenAnimal)){
+                    playerBackAnimals[i] = null; // animal is gone
                     return;
                 }
             }
@@ -161,9 +169,9 @@ public class GameBoard {
     public boolean animalStillAlive(String animal){
 
         for (int i = 0; i < 8; i++) {
-            if(playerFront[i] != null && playerFront[i].toString().equals(animal)){
+            if(playerFrontAnimals[i] != null && playerFrontAnimals[i].toString().equals(animal)){
                 return true;
-            }else if (playerBack[i] != null && playerBack[i].toString().equals(animal)){
+            }else if (playerBackAnimals[i] != null && playerBackAnimals[i].toString().equals(animal)){
                 return true;
             }
         }
@@ -174,12 +182,12 @@ public class GameBoard {
         return boardArray;
     }
 
-    public Animal [] getPlayerFront(){
-        return playerFront;
+    public Animal [] getPlayerFrontAnimals(){
+        return playerFrontAnimals;
     }
 
-    public Animal [] getPlayerBack(){
-        return this.playerBack;
+    public Animal [] getPlayerBackAnimals(){
+        return this.playerBackAnimals;
     }
 
     @Override

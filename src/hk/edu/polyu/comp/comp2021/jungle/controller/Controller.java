@@ -1,7 +1,14 @@
 package hk.edu.polyu.comp.comp2021.jungle.controller;
+import hk.edu.polyu.comp.comp2021.jungle.model.GameBoard;
 import hk.edu.polyu.comp.comp2021.jungle.model.JungleGame;
 import hk.edu.polyu.comp.comp2021.jungle.model.pieces.Animal;
 import hk.edu.polyu.comp.comp2021.jungle.view.View;
+import org.apache.commons.io.FileUtils;
+import org.json.JSONObject;
+
+import javax.imageio.IIOException;
+import java.io.File;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Controller {
@@ -27,7 +34,8 @@ public class Controller {
         //Check if a saved game should be loaded:
         view.displayMessage("Welcome! \nDo you want to load a saved game? [y/n]");
         if(getYesOrNo()) {// yes = true
-            loadGame();
+            String path = getPath();
+            loadGame(path);
             //TODO: the saved game has to be implemented!
         }
 
@@ -95,7 +103,8 @@ public class Controller {
                 return false;
             case ("open"):
                 //TODO: ask if game should be saved! use function YesOrNo()!!!!!
-                loadGame();
+                String path = getPath();
+                loadGame(path);
                 return false;
             case ("move"):
                 if (actualLine.length == 3 && performMove(actualLine[1], actualLine[2])) {
@@ -131,10 +140,10 @@ public class Controller {
         Animal [] playerPieces;
 
         if(playerBefore){
-            playerPieces = game.getGameBoard().getPlayerFront();
+            playerPieces = game.getGameBoard().getPlayerFrontAnimals();
         }
         else{
-            playerPieces = game.getGameBoard().getPlayerBack();
+            playerPieces = game.getGameBoard().getPlayerBackAnimals();
         }
         for(Animal an: playerPieces){
             if(an != null){
@@ -144,8 +153,25 @@ public class Controller {
         return true;
     }
 
-    private void loadGame(){
+    private void loadGame(String path){
+        //TODO: read the relevant informations here and than pass on to model!
         //TODO: the logic needs to be implemented!
+        try {
+            File file = new File(path);
+            String content = FileUtils.readFileToString(file);
+            JSONObject game = new JSONObject(content);
+
+            //read all inserted data front the Jason File:
+            turnCount = (int) game.get("turnCount");
+            JSONObject playerFront = (JSONObject) game.get("playerFront");
+            JSONObject playerBack = (JSONObject) game.get("playerBack");
+            frontPlayerName = playerFront.getString("name");
+            backPlayerName = playerBack.getString("name");
+        }catch (IOException e){
+            view.displayMessage("Error with reading the file. Please reenter the path!");
+            //TODO: quit OK?
+            System.exit(1);
+        }
     }
 
     private void saveGame(){
@@ -166,6 +192,12 @@ public class Controller {
                 view.displayMessage("Please retry: [y/n]");
             }
         }
+    }
+
+    private String getPath(){
+        Scanner scanner = new Scanner(System.in);
+        view.displayMessage("Please insert the Path to the saved game:");
+        return scanner.nextLine();
     }
 
     private String getPlayerName(){
