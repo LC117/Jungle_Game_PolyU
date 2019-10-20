@@ -27,4 +27,8 @@ public class JungleGame {
         //from here the coordinates are numbers beginning with 0!!
         return actual.move(to_x, to_y); // returns true if move was successful!
     }
+
+    public  boolean saveGame(String frontName, String backName, int turnCount){
+        return false;
+    }
 }

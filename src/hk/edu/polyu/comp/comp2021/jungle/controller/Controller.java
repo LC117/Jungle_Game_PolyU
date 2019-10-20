@@ -8,6 +8,8 @@ public class Controller {
     private View view;
     private JungleGame game;
     private int turnCount;
+    private String frontPlayerName;
+    private String backPlayerName;
 
     public Controller(View view, JungleGame game){
         this.view = view;
@@ -20,8 +22,6 @@ public class Controller {
     Expected format: "*command(save, open, move)*-*x_coordinate or path*-*y_coordinate*"
     */
     public void playGame(){
-        String frontPlayerName;
-        String backPlayerName;
         String actualPlayerName;
 
         //Check if a saved game should be loaded:
@@ -33,9 +33,9 @@ public class Controller {
 
         //Read the player names:
         view.displayMessage("Player in the front, please input your name:");
-        frontPlayerName = getPlayerName();
+        this.frontPlayerName = getPlayerName();
         view.displayMessage("Player in the back, please input your name:");
-        backPlayerName = getPlayerName();
+        this.backPlayerName = getPlayerName();
 
         // --The Game starts here!--
         while (true){// each iteration resembles one turn
@@ -131,7 +131,7 @@ public class Controller {
         Animal [] playerPieces;
 
         if(playerBefore){
-            playerPieces = game.getGameBoard().getplayerFront();
+            playerPieces = game.getGameBoard().getPlayerFront();
         }
         else{
             playerPieces = game.getGameBoard().getPlayerBack();
@@ -149,6 +149,7 @@ public class Controller {
     }
 
     private void saveGame(){
+        game.saveGame(frontPlayerName, backPlayerName, turnCount);
         //TODO: the logic needs to be implemented!
     }
 

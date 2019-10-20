@@ -170,7 +170,11 @@ public class GameBoard {
         return false;
     }
 
-    public Animal [] getplayerFront(){
+    public String[][] getBoardArray() {
+        return boardArray;
+    }
+
+    public Animal [] getPlayerFront(){
         return playerFront;
     }
 
