@@ -1,12 +1,10 @@
 package hk.edu.polyu.comp.comp2021.jungle.controller;
-import hk.edu.polyu.comp.comp2021.jungle.model.GameBoard;
 import hk.edu.polyu.comp.comp2021.jungle.model.JungleGame;
 import hk.edu.polyu.comp.comp2021.jungle.model.pieces.Animal;
 import hk.edu.polyu.comp.comp2021.jungle.view.View;
 import org.apache.commons.io.FileUtils;
 import org.json.JSONObject;
 
-import javax.imageio.IIOException;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
@@ -25,18 +23,16 @@ public class Controller {
 
     /*
     playGame() gets the next Line of user input and test it syntactically.
-    Then the line is send to the Model: "game" where it is checked semantically and update the game board.
+    Then the line is send to the Model: "game" where it is checked semantically and updates the game board.
     Expected format: "*command(save, open, move)*-*x_coordinate or path*-*y_coordinate*"
     */
     public void playGame(){
-        String actualPlayerName;
 
         //Check if a saved game should be loaded:
         view.displayMessage("Welcome! \nDo you want to load a saved game? [y/n]");
         if(getYesOrNo()) {// yes = true
             String path = getPath();
             loadGame(path);
-            //TODO: the saved game has to be implemented!
         }
 
         //Read the player names:
@@ -49,19 +45,25 @@ public class Controller {
         while (true){// each iteration resembles one turn
             view.displayMessage("Turn: " + turnCount);
             view.displayGameUpdate(game.getGameBoard());
-            //TODO: test if winner is determined correctly!
-            if(winner(turnCount % 2 == 0)){
-                // example: front player is at turn => check if he was defeated in the last turn!
-                    String lastPlayer = (frontPlayersTurn())? ("back player"): ("front player");
-                    view.displayMessage(">>>>>Player " + lastPlayer + " is Victorious<<<<<<");
-                    break; //Game Ends
+            checkForWinner();
+
+            if(processInput()){
+                //here the input is a move!
+                this.turnCount++;
             }
-            actualPlayerName = (frontPlayersTurn())? (frontPlayerName): (backPlayerName);
-            view.displayMessage("Player " + actualPlayerName +
-                    ", please use **command(save, open, move)*-*x_coordinate or path*" +
-                    "-*y_coordinate* to perform action: \n");
+        }
+    }
 
-
+    /*
+    playGame(GameBoard gameBoard) is called if a saved game should be started!
+     */
+    public void continueGame(){
+        //frontPlayerName, backPlayerName ant turnCont are set by the loadGame()!
+        // --The Game continues here!--
+        while (true){// each iteration resembles one turn
+            view.displayMessage("Turn: " + turnCount);
+            view.displayGameUpdate(game.getGameBoard());
+            checkForWinner();
             if(processInput()){
                 //here the input is a move!
                 this.turnCount++;
@@ -87,24 +89,44 @@ public class Controller {
         return (fromXOk && toXOk && fromYOk && toYOk);
     }
 
+    private void checkForWinner(){
+        //TODO: test if winner is determined correctly!
+        if(winner(turnCount % 2 == 0)){
+            // example: front player is at turn => check if he was defeated in the last turn!
+            String lastPlayer = (frontPlayersTurn())? ("back player"): ("front player");
+            view.displayMessage(">>>>>Player " + lastPlayer + " is Victorious<<<<<<");
+            System.exit(0); //Game Ends
+        }
+    }
+
     /*
-    processInput() takes in the next input and returns true if the input was a command for movement,
-    on "save" and "open" false is returned!
+    processInput() takes in the next input and returns true if the turnCount should be updated!
      */
     private boolean processInput() {
+        String actualPlayerName;
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
         String[] actualLine = input.split(" ");
+        //Demand Input:
+        actualPlayerName = (frontPlayersTurn())? (frontPlayerName): (backPlayerName);
+        view.displayMessage("Player " + actualPlayerName +
+                ", please use **command(save, open, move)*-*x_coordinate or path*" +
+                "-*y_coordinate* to perform action: \n");
+
         //Read input:
         switch (actualLine[0]) {
-            //TODO: implement the functionality!
             case ("save"):
-                saveGame();
+                if (saveGame(getPath())){
+                    view.displayMessage("Save successful!");
+                }
                 return false;
             case ("open"):
-                //TODO: ask if game should be saved! use function YesOrNo()!!!!!
-                String path = getPath();
-                loadGame(path);
+                //TODO: check instructions: if game save yet ? aks teacher!
+                view.displayMessage("Should the actual game be saved, again?[y/n]");
+                if(getYesOrNo()){
+                    saveGame(getPath());
+                }
+                loadGame(getPath());
                 return false;
             case ("move"):
                 if (actualLine.length == 3 && performMove(actualLine[1], actualLine[2])) {
@@ -153,30 +175,34 @@ public class Controller {
         return true;
     }
 
+    /*loadGame() is called if the user wants to load a saved game from a certain path.
+      After being called loadGame will read the Data necessary for the Controller to run, generate the new game board
+      with the help of the model and start the saved game.
+     */
     private void loadGame(String path){
         //TODO: read the relevant informations here and than pass on to model!
-        //TODO: the logic needs to be implemented!
         try {
             File file = new File(path);
             String content = FileUtils.readFileToString(file);
-            JSONObject game = new JSONObject(content);
+            JSONObject saveGame = new JSONObject(content);
 
             //read all inserted data front the Jason File:
-            turnCount = (int) game.get("turnCount");
-            JSONObject playerFront = (JSONObject) game.get("playerFront");
-            JSONObject playerBack = (JSONObject) game.get("playerBack");
+            turnCount = (int) saveGame.get("turnCount");
+            JSONObject playerFront = (JSONObject) saveGame.get("playerFront");
+            JSONObject playerBack = (JSONObject) saveGame.get("playerBack");
             frontPlayerName = playerFront.getString("name");
             backPlayerName = playerBack.getString("name");
+            this.game.setGameBoard(path);
+            playGame();
         }catch (IOException e){
-            view.displayMessage("Error with reading the file. Please reenter the path!");
+            view.displayMessage("Error with reading the file. Program will be terminated!");
             //TODO: quit OK?
             System.exit(1);
         }
     }
 
-    private void saveGame(){
-        game.saveGame(frontPlayerName, backPlayerName, turnCount);
-        //TODO: the logic needs to be implemented!
+    private boolean saveGame(String path){
+        return game.saveGame( path, frontPlayerName, backPlayerName, turnCount);
     }
 
     private boolean getYesOrNo() {
@@ -196,7 +222,7 @@ public class Controller {
 
     private String getPath(){
         Scanner scanner = new Scanner(System.in);
-        view.displayMessage("Please insert the Path to the saved game:");
+        view.displayMessage("Please insert the Path:");
         return scanner.nextLine();
     }
 

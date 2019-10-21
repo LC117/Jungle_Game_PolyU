@@ -11,7 +11,7 @@ public class SaveAndLoad {
     /*
     loadGame() returns the loaded game board (initialized with all animals) if successful, else null.
      */
-    private GameBoard loadGame (String path) {
+    public GameBoard loadGame (String path) {
         try {
             //Read the root element from the saved JSON file:
             File file = new File(path);
@@ -66,7 +66,7 @@ public class SaveAndLoad {
     /*
     saveGame() returns true if successful else false.
      */
-    private boolean saveGame (String path, GameBoard gameBoard, String frontName, String backName, int turnCount){
+    public boolean saveGame (String path, String frontName, String backName, int turnCount, GameBoard gameBoard){
         JSONObject gameJason = gameBoardToJson(gameBoard, frontName, backName, turnCount);
         try {
             // paths attribute needs form: "Z:\\Programming\\java_test\\test.txt":
@@ -122,7 +122,7 @@ public class SaveAndLoad {
     public static void main(String[] args) { //only for testing!
         SaveAndLoad a = new SaveAndLoad();
         GameBoard x = new GameBoard();
-        a.saveGame("Z:\\Programming\\java_test\\test.json", x, "front", "back", 10);
+        //a.saveGame("Z:\\Programming\\java_test\\test.json", x, "front", "back", 10);
         GameBoard y = a.loadGame("Z:\\Programming\\java_test\\test.json");
         System.out.println(y.toString());
     }

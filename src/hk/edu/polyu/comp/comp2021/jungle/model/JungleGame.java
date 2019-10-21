@@ -8,6 +8,19 @@ public class JungleGame {
         this.board = new GameBoard();
     }
 
+    /*
+    setGameBoard() returnes true if the gameBoard is set successful, else false!
+     */
+    public boolean setGameBoard(String path){
+        SaveAndLoad saveAndLoad = new SaveAndLoad();
+        GameBoard gameBoard = saveAndLoad.loadGame(path);
+        if(gameBoard == null){
+            return false;
+        }
+        this.board = gameBoard;
+        return true;
+    }
+
     public GameBoard getGameBoard(){
         return this.board;
     }
@@ -28,7 +41,11 @@ public class JungleGame {
         return actual.move(to_x, to_y); // returns true if move was successful!
     }
 
-    public  boolean saveGame(String frontName, String backName, int turnCount){
-        return false;
+    /*
+    saveGame() returns true if successful, else false.
+     */
+    public  boolean saveGame(String path, String frontName, String backName, int turnCount){
+        SaveAndLoad saveAndLoad = new SaveAndLoad();
+        return saveAndLoad.saveGame(path, frontName, backName, turnCount, board);
     }
 }
