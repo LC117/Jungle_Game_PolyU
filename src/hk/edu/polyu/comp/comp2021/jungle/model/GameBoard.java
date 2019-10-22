@@ -186,6 +186,14 @@ public class GameBoard {
         return this.playerBackAnimals;
     }
 
+    public boolean isTrap(int x, int y){
+        boolean retVal = false;
+        if(this.boardArray[x][y].indexOf('[') >= 0){
+            retVal =  true;
+        }
+        return retVal;
+    }
+
     @Override
     public String toString(){
         String boardString = "";
