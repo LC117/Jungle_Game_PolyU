@@ -28,7 +28,7 @@ public class SaveAndLoad {
             String frontPlayerName = playerFront.getString("name");
             String playerBackName = playerBack.getString("name");
             JSONObject playerFrontPieces = playerFront.getJSONObject("pieces");
-            JSONObject playerBackPieces = playerFront.getJSONObject("pieces");
+            JSONObject playerBackPieces = playerBack.getJSONObject("pieces");
 
             //parse the Animals:
             Animal [] frontPlayerAnimals = new Animal [8];
@@ -65,6 +65,7 @@ public class SaveAndLoad {
 
     /*
     saveGame() returns true if successful else false.
+    Path example: Z:\\Jungle_Game_PolyU\\SaveGames\\save.json
      */
     public boolean saveGame (String path, String frontName, String backName, int turnCount, GameBoard gameBoard){
         JSONObject gameJason = gameBoardToJson(gameBoard, frontName, backName, turnCount);

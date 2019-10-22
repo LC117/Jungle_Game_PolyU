@@ -42,11 +42,13 @@ public class Controller {
         this.backPlayerName = getPlayerName();
 
         // --The Game starts here!--
+        view.displayMessage("Turn: " + turnCount);
+        view.displayGameUpdate(game.getGameBoard());
+
         while (true){// each iteration resembles one turn
+            checkForWinner();
             view.displayMessage("Turn: " + turnCount);
             view.displayGameUpdate(game.getGameBoard());
-            checkForWinner();
-
             if(processInput()){
                 //here the input is a move!
                 this.turnCount++;
@@ -61,9 +63,10 @@ public class Controller {
         //frontPlayerName, backPlayerName ant turnCont are set by the loadGame()!
         // --The Game continues here!--
         while (true){// each iteration resembles one turn
+
+            checkForWinner();
             view.displayMessage("Turn: " + turnCount);
             view.displayGameUpdate(game.getGameBoard());
-            checkForWinner();
             if(processInput()){
                 //here the input is a move!
                 this.turnCount++;
@@ -104,9 +107,7 @@ public class Controller {
      */
     private boolean processInput() {
         String actualPlayerName;
-        Scanner scanner = new Scanner(System.in);
-        String input = scanner.nextLine();
-        String[] actualLine = input.split(" ");
+
         //Demand Input:
         actualPlayerName = (frontPlayersTurn())? (frontPlayerName): (backPlayerName);
         view.displayMessage("Player " + actualPlayerName +
@@ -114,19 +115,28 @@ public class Controller {
                 "-*y_coordinate* to perform action: \n");
 
         //Read input:
+        Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine();
+        String[] actualLine = input.split(" ");
         switch (actualLine[0]) {
             case ("save"):
-                if (saveGame(getPath())){
+                if (actualLine.length == 2 && saveGame(actualLine[1])){
+                    view.displayMessage("Save successful!");
+                }else if (saveGame(getPath())){
                     view.displayMessage("Save successful!");
                 }
                 return false;
             case ("open"):
                 //TODO: check instructions: if game save yet ? aks teacher!
-                view.displayMessage("Should the actual game be saved, again?[y/n]");
+                view.displayMessage("Have you saved the game, if not the progress will be lost. Save game ?[y/n]");
                 if(getYesOrNo()){
                     saveGame(getPath());
                 }
-                loadGame(getPath());
+                if (actualLine.length == 2){
+                    loadGame(actualLine[1]);
+                }else {
+                    loadGame(getPath());
+                }
                 return false;
             case ("move"):
                 if (actualLine.length == 3 && performMove(actualLine[1], actualLine[2])) {
@@ -193,7 +203,7 @@ public class Controller {
             frontPlayerName = playerFront.getString("name");
             backPlayerName = playerBack.getString("name");
             this.game.setGameBoard(path);
-            playGame();
+            continueGame();
         }catch (IOException e){
             view.displayMessage("Error with reading the file. Program will be terminated!");
             //TODO: quit OK?

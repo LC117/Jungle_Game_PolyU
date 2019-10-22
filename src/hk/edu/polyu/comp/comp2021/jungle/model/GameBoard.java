@@ -37,7 +37,7 @@ public class GameBoard {
     }
 
     public void resetGameBoard(Animal [] playerFrontAnimals, Animal [] playerBackAnimals){ //
-        setUpGameBoard();
+        this.boardArray = setUpGameBoard();
         this.playerFrontAnimals = playerFrontAnimals;
         this.playerBackAnimals = playerBackAnimals;
         for (int i = 0; i < 8; i++) {
@@ -178,12 +178,8 @@ public class GameBoard {
         return false;
     }
 
-    public String[][] getBoardArray() {
-        return boardArray;
-    }
-
     public Animal [] getPlayerFrontAnimals(){
-        return playerFrontAnimals;
+        return this.playerFrontAnimals;
     }
 
     public Animal [] getPlayerBackAnimals(){
