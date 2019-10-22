@@ -58,36 +58,6 @@ public class Animal{
             }
         }
 
-        //Lion and Tiger jumps over the river (Move this to Lion and Tiger classes)
-        if(water && (this.strength == 3 || this.strength == 7)){
-            boolean vertical = false;
-            boolean up = true;
-            if(this.y_location == y){
-                vertical = true;
-            }
-            if((this.y_location > y) || (this.x_location > x)){
-                up = false;
-            }
-            while(water){
-                if(vertical){
-                    if(up)
-                        y +=1;
-                    else
-                        y -=1;
-                    water = (y == 3 || y == 4 || y == 5) && (x == 1 || x == 2 || x == 4 || x == 5);
-                }
-                else{
-                    if(up)
-                        x +=1;
-                    else
-                        x -=1;
-                    water = (y == 3 || y == 4 || y == 5) && (x == 1 || x == 2 || x == 4 || x == 5);
-                }
-
-            }
-
-        }
-
 
 
 
