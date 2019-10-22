@@ -30,6 +30,7 @@ public class GameBoard {
         this.boardArray = setUpGameBoard();
         initializeAnimals();
     }
+
     public GameBoard(Animal [] playerFrontAnimals, Animal [] playerBackAnimals, String [][] boardArray  ) {
         this.boardArray = boardArray;
         this.playerFrontAnimals = playerFrontAnimals;

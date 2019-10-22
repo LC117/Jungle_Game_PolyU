@@ -1,9 +1,6 @@
 package hk.edu.polyu.comp.comp2021.jungle.model;
 
-import hk.edu.polyu.comp.comp2021.jungle.model.pieces.Animal;
-import hk.edu.polyu.comp.comp2021.jungle.model.pieces.Lion;
-import hk.edu.polyu.comp.comp2021.jungle.model.pieces.Rat;
-import hk.edu.polyu.comp.comp2021.jungle.model.pieces.Tiger;
+import hk.edu.polyu.comp.comp2021.jungle.model.pieces.*;
 import org.json.*;
 import java.io.File;
 import java.io.FileWriter;

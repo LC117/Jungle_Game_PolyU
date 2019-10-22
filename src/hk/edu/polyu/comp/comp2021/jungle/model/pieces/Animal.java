@@ -20,9 +20,11 @@ public class Animal{
     public int getStrength(){
         return this.strength;
     }
+
     public int getX_location(){
         return  this.x_location;
     }
+
     public int getY_location(){
         return this.y_location;
     }
@@ -94,6 +96,7 @@ public class Animal{
     public boolean getFrontPlayer(){
         return this.frontPlayer;
     }
+
     public GameBoard getGameBoard(){
         return  this.gameBoard;
     }

@@ -46,7 +46,6 @@ public class Tiger extends Animal {
         return (y == 3 || y == 4 || y == 5) && (x == 1 || x == 2 || x == 4 || x == 5);
     }
 
-    //TODO: test functionality!
     //returns true if all positions in between are water and no rat rat is in between as well.
     private boolean ligerJump(int x_to, int y_to){
         //horizontally we must check if between the two spots is only water (two water areas could be in between!)
@@ -70,8 +69,6 @@ public class Tiger extends Animal {
         }
         return onlyWaterNoAnimal;
     }
-
-
 
     /*
     move() allows an animal to change its location.
@@ -105,6 +102,7 @@ public class Tiger extends Animal {
     public int getX_location(){
         return  this.x_location;
     }
+
     public int getY_location(){
         return this.y_location;
     }

@@ -86,6 +86,7 @@ public class Rat extends Animal{
     public int getX_location(){
         return  this.x_location;
     }
+
     public int getY_location(){
         return this.y_location;
     }
