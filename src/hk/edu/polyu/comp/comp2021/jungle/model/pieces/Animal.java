@@ -47,6 +47,9 @@ public class Animal{
         }else if (collisionAnimal.strength <= this.strength){ //other Animal will be eaten!
             animalInWay = false;
         }
+        else if (gameBoard.isTrap(x,y)){
+            animalInWay = false;
+        }
 
         //allows the rat to traverse on water and eat the elephant
         if(water && this.strength == 1){
