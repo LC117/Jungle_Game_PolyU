@@ -1,29 +1,33 @@
 package hk.edu.polyu.comp.comp2021.jungle.model.pieces;
 import hk.edu.polyu.comp.comp2021.jungle.model.GameBoard;
 public class Tiger extends Animal {
+
+    private int x_location;
+    private int y_location;
+    private boolean frontPlayer; //true if Animal is owned by front Player.
+    private int strength;
+    private GameBoard gameBoard;
+
     public Tiger(int x_location, int y_location, boolean frontPlayer, GameBoard gameBoard) {
         super(x_location, y_location, frontPlayer, 6, gameBoard);
+
+        this.x_location = x_location;
+        this.y_location = y_location;
+        this.frontPlayer = frontPlayer;
+        this.strength = 1;
+        this.gameBoard = gameBoard;
     }
-
-    private int x_location = super.getX_location();
-    private int y_location = super.getY_location();
-    private boolean frontPlayer = super.getFrontPlayer(); //true if Animal is owned by front Player.
-    private int strength = super.getStrength();
-    private GameBoard gameBoard = super.getGameBoard();
-
 
     private boolean isMoveLegal(int x, int y) {
         boolean inBounds = !(x < 0 || x > 6 || y < 0 || y > 8);
-        boolean water = false;
+        boolean water = checkWater(x, y);
         boolean ownDen = frontPlayer ? (x == 3 && y == 0) : (x == 3 && y == 8);
         boolean animalInWay = false; //true if: stronger Enemy, own animal
-        boolean onLand = !((this.y_location == 3 || this.y_location == 4 || this.y_location == 5) && (this.x_location == 1 || this.x_location == 2 || this.x_location == 4 || this.x_location == 5));
-        Animal collisionAnimal = null;
-        try {
-            collisionAnimal = gameBoard.getAnimal(x, y);
-        } catch (Exception e) {
-            collisionAnimal = null;
-        }
+
+        Animal collisionAnimal;
+
+        collisionAnimal = gameBoard.getAnimal(x, y);
+
         if (collisionAnimal == null) {
             animalInWay = false;
         } else if (collisionAnimal.getFrontPlayer() == frontPlayer) {
@@ -42,82 +46,31 @@ public class Tiger extends Animal {
         return (y == 3 || y == 4 || y == 5) && (x == 1 || x == 2 || x == 4 || x == 5);
     }
 
-    //Lion and Tiger check for next space being across the river
-    public boolean ligerJump(int x, int y) {
-        boolean isValid = false;
-        if (x == this.x_location) {
-            //means that check for up and down
-            //checks if original position is next to water
-            if (checkWater(this.x_location, this.y_location + 1) || checkWater(this.x_location, this.y_location - 1)) {
-                //checks if new position is next to water
-                if (checkWater(x, y - 1) || checkWater(x, y + 1)) {
-                    return true;
-                }
-            }
-        }
-        if (y == this.y_location) {
-            //means that check for side to side
-            //checks if original position is next to water
-            if (checkWater(this.x_location + 1, this.y_location) || checkWater(this.x_location - 1, this.y_location)) {
-                //checks if new position is next to water
-                if (checkWater(x - 1, y) || checkWater(x + 1, y)) {
-                    return true;
-                }
-            }
-        }
+    //TODO: test functionality!
+    //returns true if all positions in between are water and no rat rat is in between as well.
+    private boolean ligerJump(int x_to, int y_to){
+        //horizontally we must check if between the two spots is only water (two water areas could be in between!)
+        int x_smaller = Math.min(x_to, x_location);
+        int x_bigger = Math.max(x_to, x_location);
+        int y_smaller = Math.min(y_to, y_location);
+        int y_bigger = Math.max(y_to, y_location);
 
+        boolean onlyWaterNoAnimal = true; //No water and no animals in water between!
 
-        return isValid;
+        if (x_location != x_to && y_location == y_to){
+            for (int i = x_smaller + 1 ; i < x_bigger ; i++) {
+                onlyWaterNoAnimal = onlyWaterNoAnimal && gameBoard.isWater(i, y_location) && gameBoard.getAnimal(i, y_location) == null;
+            }
+        }else if (y_location != y_to && x_location == x_to){
+            for (int i = y_smaller + 1; i < y_bigger ; i++) {
+                onlyWaterNoAnimal = onlyWaterNoAnimal && gameBoard.isWater(x_location, i) && gameBoard.getAnimal(x_location, i) == null;
+            }
+        }else {
+            return false;
+        }
+        return onlyWaterNoAnimal;
     }
 
-
-    //Lion and Tiger jumps over the river with new x and y being the closest water square
-    public int[] liger(int x, int y) {
-        int[] newPos = new int[2];
-        boolean water = (y == 3 || y == 4 || y == 5) && (x == 1 || x == 2 || x == 4 || x == 5);
-        if (water && (this.strength == 6 || this.strength == 7)) {
-            boolean vertical = false;
-            boolean up = true;
-            if (this.y_location == y) {
-                vertical = true;
-            }
-            if ((this.y_location > y) || (this.x_location > x)) {
-                up = false;
-            }
-
-            Animal collisionAnimal = gameBoard.getAnimal(x, y);
-            //Checks to see if there is an animal in the way on the water (i.e. rat)
-
-            while (water) {
-                if (collisionAnimal != null) {
-                    //Puts an extreme number in x to signify that movement should fail
-                    x = 5000;
-                    break;
-                }
-                if (vertical) {
-                    if (up)
-                        y += 1;
-                    else
-                        y -= 1;
-                    water = (y == 3 || y == 4 || y == 5) && (x == 1 || x == 2 || x == 4 || x == 5);
-                } else {
-                    if (up)
-                        x += 1;
-                    else
-                        x -= 1;
-                    water = (y == 3 || y == 4 || y == 5) && (x == 1 || x == 2 || x == 4 || x == 5);
-                }
-
-                collisionAnimal = gameBoard.getAnimal(x, y);
-
-            }
-
-        }
-        newPos[0] = x;
-        newPos[1] = y;
-
-        return newPos;
-    }
 
 
     /*
@@ -134,17 +87,8 @@ public class Tiger extends Animal {
         boolean left = this.x_location == x_new + 1 && this.y_location == y_new;
         boolean right = this.x_location == x_new - 1 && this.y_location == y_new;
         boolean bottom = this.x_location == x_new && this.y_location == y_new + 1;
-        //TODO check if on the fiels is another animal (own or stronger enemy one)
+        //TODO check if on the fields is another animal (own or stronger enemy one)
         if (top || left || right || bottom || ligerJump(x_new, y_new)) {
-            int[] newSpace = liger(x_new, y_new);
-            //checks for something blocking the lion or tiger from moving across the water
-            if (newSpace[0] == 5000) {
-                return false;
-            } else {
-                x_new = newSpace[0];
-                y_new = newSpace[1];
-            }
-
             if (gameBoard.getAnimal(x_new, y_new) != null) { // this test is ok here because in is MoveLegal() we only left open if there is a weaker animal.
                 gameBoard.removeAnimal(gameBoard.getAnimal(x_new, y_new));//remove eaten animal
             }
@@ -157,4 +101,12 @@ public class Tiger extends Animal {
         }
         return false;
     }
+
+    public int getX_location(){
+        return  this.x_location;
+    }
+    public int getY_location(){
+        return this.y_location;
+    }
+
 }

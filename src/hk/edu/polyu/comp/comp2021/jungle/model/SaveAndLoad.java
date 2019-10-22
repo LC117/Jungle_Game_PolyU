@@ -1,6 +1,9 @@
 package hk.edu.polyu.comp.comp2021.jungle.model;
 
 import hk.edu.polyu.comp.comp2021.jungle.model.pieces.Animal;
+import hk.edu.polyu.comp.comp2021.jungle.model.pieces.Lion;
+import hk.edu.polyu.comp.comp2021.jungle.model.pieces.Rat;
+import hk.edu.polyu.comp.comp2021.jungle.model.pieces.Tiger;
 import org.json.*;
 import java.io.File;
 import java.io.FileWriter;
@@ -22,23 +25,20 @@ public class SaveAndLoad {
             GameBoard gameBoard = new GameBoard();
 
             //read all inserted data front the Jason File:
-            int turnCount = (int) game.get("turnCount");
             JSONObject playerFront = (JSONObject) game.get("playerFront");
             JSONObject playerBack = (JSONObject) game.get("playerBack");
-            String frontPlayerName = playerFront.getString("name");
-            String playerBackName = playerBack.getString("name");
             JSONObject playerFrontPieces = playerFront.getJSONObject("pieces");
             JSONObject playerBackPieces = playerBack.getJSONObject("pieces");
 
             //parse the Animals:
             Animal [] frontPlayerAnimals = new Animal [8];
             Animal [] backPlayerAnimals = new Animal [8];
-            JSONObject currentForntPlayerAnimal;
+            JSONObject currentFrontPlayerAnimal;
             JSONObject currentBackPlayerAnimal;
 
             for (int i = 0; i < 8; i++) {
-                currentForntPlayerAnimal = (JSONObject) playerFrontPieces.get((i+1) + "");
-                frontPlayerAnimals[i] = parseAnimal(currentForntPlayerAnimal, gameBoard);
+                currentFrontPlayerAnimal = (JSONObject) playerFrontPieces.get((i+1) + "");
+                frontPlayerAnimals[i] = parseAnimal(currentFrontPlayerAnimal, gameBoard);
                 currentBackPlayerAnimal = (JSONObject) playerBackPieces.get((i+1) + "");
                 backPlayerAnimals[i] = parseAnimal(currentBackPlayerAnimal, gameBoard);
             }
@@ -57,9 +57,25 @@ public class SaveAndLoad {
             int x = (int) animal.get("x_coordinate");
             int y = (int) animal.get("y_coordinate");
             int strength = (int) animal.get("strength");
-            return new Animal(x, y, ownedByFrontPlayer, strength, gameBoard);
+            return createAnimal(x, y, ownedByFrontPlayer, strength, gameBoard);
         }else{
             return null;
+        }
+    }
+
+    /*
+    createAnimal() is necessary as the Rat, Tiger and Lion have special abilities!
+     */
+    private Animal createAnimal(int x, int y, boolean ownedByFrontPlayer, int strength, GameBoard gameBoard){
+        switch (strength){
+            case(1):
+                return new Rat(x, y, ownedByFrontPlayer, gameBoard);
+            case(6):
+                return new Tiger(x, y, ownedByFrontPlayer, gameBoard);
+            case(7):
+                return new Lion(x, y, ownedByFrontPlayer, gameBoard);
+                default:
+                    return new Animal(x, y, ownedByFrontPlayer, strength, gameBoard);
         }
     }
 
@@ -118,13 +134,5 @@ public class SaveAndLoad {
         animalJson.put("strength", animal.getStrength());
         animalJson.put("alive", alive);
         return animalJson;
-    }
-
-    public static void main(String[] args) { //only for testing!
-        SaveAndLoad a = new SaveAndLoad();
-        GameBoard x = new GameBoard();
-        //a.saveGame("Z:\\Programming\\java_test\\test.json", x, "front", "back", 10);
-        GameBoard y = a.loadGame("Z:\\Programming\\java_test\\test.json");
-        System.out.println(y.toString());
     }
 }

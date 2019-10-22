@@ -42,9 +42,6 @@ public class Controller {
         this.backPlayerName = getPlayerName();
 
         // --The Game starts here!--
-        view.displayMessage("Turn: " + turnCount);
-        view.displayGameUpdate(game.getGameBoard());
-
         while (true){// each iteration resembles one turn
             checkForWinner();
             view.displayMessage("Turn: " + turnCount);

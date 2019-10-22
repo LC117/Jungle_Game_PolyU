@@ -50,21 +50,6 @@ public class Animal{
         else if (gameBoard.isTrap(x,y)){
             animalInWay = false;
         }
-
-        //allows the rat to traverse on water and eat the elephant
-        if(water && this.strength == 1){
-            water = false;
-        }
-        if(collisionAnimal != null){
-            if(collisionAnimal.strength == 8 && collisionAnimal.getFrontPlayer() != frontPlayer && onLand){
-                animalInWay = false;
-            }
-        }
-
-
-
-
-
         return !water && inBounds && !ownDen && !animalInWay; // not in water, in Bound, not on OWN Den, not on own Animal, not stronger enemy Animal!
     }
 

@@ -107,8 +107,21 @@ public class GameBoard {
         }
     }
 
-    private void insert(Animal animal){
-        boardArray[animal.getY_location()][animal.getX_location()] = "|" + animal.toString() + "|";
+    private void insert(Animal animal) {
+        int x = animal.getX_location();
+        int y = animal.getY_location();
+        char bracket = boardArray[y][x].charAt(0);
+        char closingBracket;
+
+        if (bracket == '|') {
+            boardArray[y][x] = "|" + animal.toString() + "|";
+        } else if (bracket == '(') {
+            closingBracket = (char) (bracket + 1);
+            boardArray[y][x] = bracket + animal.toString() + closingBracket;
+        } else {
+            closingBracket = (char) (bracket + 2);
+            boardArray[y][x] = bracket + animal.toString() + closingBracket;
+        }
     }
 
     public String[][] getGameboard(){
@@ -140,10 +153,10 @@ public class GameBoard {
     }
 
     public void moveAnimal(int from_x, int from_y, Animal movedAnimal){ //Parameter is the Animal with its new location. Is called by the Animal class to submit change.
-        String temp = boardArray[from_y][from_x];
-        boardArray[from_y][from_x] = temp.charAt(0) + "_" + temp.charAt(2);
-        temp = boardArray[movedAnimal.getY_location()][ movedAnimal.getX_location()];
-        boardArray[movedAnimal.getY_location()][ movedAnimal.getX_location()] = temp.charAt(0) + movedAnimal.toString() + temp.charAt(2);
+        String temp = this.boardArray[from_y][from_x];
+        this.boardArray[from_y][from_x] = temp.charAt(0) + "_" + temp.charAt(2);
+        temp = this.boardArray[movedAnimal.getY_location()][ movedAnimal.getX_location()];
+        this.boardArray[movedAnimal.getY_location()][ movedAnimal.getX_location()] = temp.charAt(0) + movedAnimal.toString() + temp.charAt(2);
     }
     
     public void removeAnimal(Animal eatenAnimal){
@@ -187,11 +200,11 @@ public class GameBoard {
     }
 
     public boolean isTrap(int x, int y){
-        boolean retVal = false;
-        if(this.boardArray[x][y].indexOf('[') >= 0){
-            retVal =  true;
-        }
-        return retVal;
+        return this.boardArray[y][x].indexOf('[') == 0;
+    }
+
+    public boolean isWater(int x, int y){
+        return this.boardArray[y][x].indexOf('(') == 0;
     }
 
     @Override

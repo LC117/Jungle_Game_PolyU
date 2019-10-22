@@ -1,6 +1,8 @@
 package hk.edu.polyu.comp.comp2021.jungle.model;
 
 import hk.edu.polyu.comp.comp2021.jungle.model.pieces.Animal;
+import hk.edu.polyu.comp.comp2021.jungle.model.pieces.Rat;
+import hk.edu.polyu.comp.comp2021.jungle.model.pieces.Tiger;
 
 public class JungleGame {
     private GameBoard board;
@@ -38,6 +40,12 @@ public class JungleGame {
             return false;
         }
         //from here the coordinates are numbers beginning with 0!!
+        if(actual instanceof Tiger){
+            //TODO: not entered when loaded!!!
+            System.out.println("Haiyaa");
+        }else if(actual instanceof Rat){
+            System.out.println("rat");
+        }
         return actual.move(to_x, to_y); // returns true if move was successful!
     }
 

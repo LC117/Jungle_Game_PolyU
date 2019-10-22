@@ -1,33 +1,38 @@
 package hk.edu.polyu.comp.comp2021.jungle.model.pieces;
 import hk.edu.polyu.comp.comp2021.jungle.model.GameBoard;
 public class Rat extends Animal{
-    public Rat (int x_location, int y_location, boolean frontPlayer, GameBoard gameBoard) {
+
+    private int x_location;
+    private int y_location;
+    private boolean frontPlayer; //true if Animal is owned by front Player.
+    private int strength;
+    private GameBoard gameBoard;
+
+
+    public Rat(int x_location, int y_location, boolean frontPlayer, GameBoard gameBoard) {
         super(x_location, y_location, frontPlayer, 1, gameBoard);
+
+        this.x_location = x_location;
+        this.y_location = y_location;
+        this.frontPlayer = frontPlayer;
+        this.strength = 1;
+        this.gameBoard = gameBoard;
     }
-    private int x_location = super.getX_location();
-    private int y_location = super.getY_location();
-    private boolean frontPlayer = super.getFrontPlayer(); //true if Animal is owned by front Player.
-    private int strength = super.getStrength();
-    private GameBoard gameBoard = super.getGameBoard();
-
-
 
     /*
     isMoveLegal() returns true if the location is possible: in Bounds [0, ..., 6], not on own den or water.
      */
-    private boolean isMoveLegal (int x, int y){
+    private boolean isMoveLegal (int x, int y){ // x and y are the new coordinates
         boolean inBounds =  !(x < 0 || x > 6 || y < 0 || y > 8);
         boolean water = (y == 3 || y == 4 || y == 5) && (x == 1 || x == 2 || x == 4 || x == 5);
         boolean ownDen = frontPlayer ? (x == 3 && y == 0) : (x == 3 && y == 8);
         boolean animalInWay = false; //true if: stronger Enemy, own animal
-        boolean onLand = !((this.y_location == 3 || this.y_location == 4 || this.y_location == 5) && (this.x_location == 1 || this.x_location == 2 || this.x_location == 4 || this.x_location == 5));
-        Animal collisionAnimal =  null;
-        try{
-            collisionAnimal = gameBoard.getAnimal(x, y);
-        }
-        catch(Exception e){
-            collisionAnimal = null;
-        }
+        boolean onLand = !((this.y_location == 3 || this.y_location == 4 || this.y_location == 5) &&
+                (this.x_location == 1 || this.x_location == 2 || this.x_location == 4 || this.x_location == 5));
+        Animal collisionAnimal;
+
+        collisionAnimal = gameBoard.getAnimal(x, y);
+
         if (collisionAnimal == null){
             animalInWay = false;
         }
@@ -43,10 +48,8 @@ public class Rat extends Animal{
         if(water && this.strength == 1){
             water = false;
         }
-        if(collisionAnimal != null){
-            if(collisionAnimal.getStrength() == 8 && collisionAnimal.getFrontPlayer() != frontPlayer && onLand){
-                animalInWay = false;
-            }
+        if(collisionAnimal != null && collisionAnimal.getStrength() == 8 && collisionAnimal.getFrontPlayer() != frontPlayer && onLand){
+            animalInWay = false;
         }
         return !water && inBounds && !ownDen && !animalInWay; // not in water, in Bound, not on OWN Den, not on own Animal, not stronger enemy Animal!
     }
@@ -80,5 +83,10 @@ public class Rat extends Animal{
         return false;
     }
 
-
+    public int getX_location(){
+        return  this.x_location;
+    }
+    public int getY_location(){
+        return this.y_location;
+    }
 }
