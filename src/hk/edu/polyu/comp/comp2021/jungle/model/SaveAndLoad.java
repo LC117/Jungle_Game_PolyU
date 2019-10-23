@@ -78,7 +78,8 @@ public class SaveAndLoad {
 
     /*
     saveGame() returns true if successful else false.
-    Path example: Z:\\Jungle_Game_PolyU\\SaveGames\\save.json
+    Path example: Z:\\Jungle_Game_PolyU\\SaveGames\\save.json | Z:\\Jungle_Game_PolyU\\SaveGames\\testJump.json | Z:\\Jungle_Game_PolyU\\SaveGames\\testWinDen.json
+
      */
     public boolean saveGame (String path, String frontName, String backName, int turnCount, GameBoard gameBoard){
         JSONObject gameJason = gameBoardToJson(gameBoard, frontName, backName, turnCount);

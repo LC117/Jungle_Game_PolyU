@@ -4,6 +4,8 @@ import hk.edu.polyu.comp.comp2021.jungle.model.pieces.Animal;
 import hk.edu.polyu.comp.comp2021.jungle.model.pieces.Rat;
 import hk.edu.polyu.comp.comp2021.jungle.model.pieces.Tiger;
 
+import java.io.File;
+
 public class JungleGame {
     private GameBoard board;
     public JungleGame(){
@@ -39,13 +41,6 @@ public class JungleGame {
         if (actual == null || (frontPlayersTurn != actual.getFrontPlayer())){
             return false;
         }
-        //from here the coordinates are numbers beginning with 0!!
-        if(actual instanceof Tiger){
-            //TODO: not entered when loaded!!!
-            System.out.println("Haiyaa");
-        }else if(actual instanceof Rat){
-            System.out.println("rat");
-        }
         return actual.move(to_x, to_y); // returns true if move was successful!
     }
 
@@ -54,6 +49,20 @@ public class JungleGame {
      */
     public  boolean saveGame(String path, String frontName, String backName, int turnCount){
         SaveAndLoad saveAndLoad = new SaveAndLoad();
-        return saveAndLoad.saveGame(path, frontName, backName, turnCount, board);
+        boolean saveSuccessful = saveAndLoad.saveGame(path, frontName, backName, turnCount, board);
+        if (saveSuccessful){
+            return true;
+        }else{
+            String newPath = System.getProperty("user.dir") + "\\SaveGames\\\\testJump" + ".json";
+            try {
+                File file = new File(newPath);
+                if (file.exists()) {
+                    saveAndLoad.saveGame(newPath, frontName, backName, turnCount, board);
+                }
+                return true;
+            } catch (Exception eII) {
+                return false;
+            }
+        }
     }
 }

@@ -10,7 +10,7 @@ public class Lion extends Animal {
     private GameBoard gameBoard;
 
     public Lion(int x_location, int y_location, boolean frontPlayer, GameBoard gameBoard) {
-        super(x_location, y_location, frontPlayer, 6, gameBoard);
+        super(x_location, y_location, frontPlayer, 7, gameBoard);
 
         this.x_location = x_location;
         this.y_location = y_location;

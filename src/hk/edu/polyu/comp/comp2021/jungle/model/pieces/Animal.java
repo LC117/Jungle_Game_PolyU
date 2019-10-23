@@ -46,7 +46,7 @@ public class Animal{
             animalInWay = true;
         }else if (collisionAnimal.strength > this.strength){
             animalInWay = true;
-        }else if (collisionAnimal.strength <= this.strength){ //other Animal will be eaten!
+        }else if (collisionAnimal.strength <= this.strength || enemyOnTrap(collisionAnimal)){ //other Animal will be eaten!
             animalInWay = false;
         }
         else if (gameBoard.isTrap(x,y)){
@@ -82,6 +82,10 @@ public class Animal{
             return true;
         }
         return false;
+    }
+
+    private boolean enemyOnTrap(Animal animal){
+        return gameBoard.isTrap(animal.getX_location(), animal.getY_location());
     }
 
     @Override

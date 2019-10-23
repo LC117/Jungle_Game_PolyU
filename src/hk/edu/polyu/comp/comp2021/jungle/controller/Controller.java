@@ -91,8 +91,7 @@ public class Controller {
 
     private void checkForWinner(){
         //TODO: test if winner is determined correctly!
-        if(winner(turnCount % 2 == 0)){
-            // example: front player is at turn => check if he was defeated in the last turn!
+        if(lastPlayerWon()){
             String lastPlayer = (frontPlayersTurn())? ("back player"): ("front player");
             view.displayMessage(">>>>>Player " + lastPlayer + " is Victorious<<<<<<");
             System.exit(0); //Game Ends
@@ -164,30 +163,51 @@ public class Controller {
         }
     }
 
-    private boolean winner(boolean playerBefore){ // true if front player has the turn
+    /*
+    winner() checks if a winning condition was met in the round before:
+    player before moved on den or the actual player has no animals!
+     */
+    private boolean lastPlayerWon(){
 
-        Animal [] playerPieces;
+        boolean actualPlayerIsFrontPlayer = frontPlayersTurn(); // true => playerBefore was backPlayer, else he was frontPlayer
+        return animalOnActualDen(actualPlayerIsFrontPlayer) || allPiecesDead(actualPlayerIsFrontPlayer);
+    }
 
-        if(playerBefore){
-            playerPieces = game.getGameBoard().getPlayerFrontAnimals();
+    private boolean animalOnActualDen(boolean actualPlayerIsFrontPlayer){
+        if(actualPlayerIsFrontPlayer){
+            //the player before was the back player, if he put an animal on the front players den he won.
+            return game.getGameBoard().getAnimal(3, 0) != null;
         }
         else{
-            playerPieces = game.getGameBoard().getPlayerBackAnimals();
+            //the player before was the front player, if he put an animal on the back players den, he won.
+            return game.getGameBoard().getAnimal(3, 8) != null;
         }
-        for(Animal an: playerPieces){
+
+    }
+    private boolean allPiecesDead(boolean actualPlayerIsFrontPlayer){
+        Animal [] animalPieces;
+        if(actualPlayerIsFrontPlayer){
+            //the player before was the back player, if he won all front player animals need to be dead.
+            animalPieces = game.getGameBoard().getPlayerFrontAnimals();
+        }
+        else{
+            //the player before was the front player, if he won all back player animals need to be dead.
+            animalPieces = game.getGameBoard().getPlayerBackAnimals();
+        }
+        for(Animal an: animalPieces){
             if(an != null){
+                //Here at least one animal is still alive.
                 return false;
             }
         }
-        return true;
+        return true; //all animals dead.
     }
 
     /*loadGame() is called if the user wants to load a saved game from a certain path.
       After being called loadGame will read the Data necessary for the Controller to run, generate the new game board
       with the help of the model and start the saved game.
      */
-    private void loadGame(String path){
-        //TODO: read the relevant informations here and than pass on to model!
+    private void loadGame(String path) {
         try {
             File file = new File(path);
             String content = FileUtils.readFileToString(file);
@@ -201,10 +221,18 @@ public class Controller {
             backPlayerName = playerBack.getString("name");
             this.game.setGameBoard(path);
             continueGame();
-        }catch (IOException e){
-            view.displayMessage("Error with reading the file. Program will be terminated!");
-            //TODO: quit OK?
-            System.exit(1);
+        } catch (IOException e) {
+            view.displayMessage("\n Error with reading the file. Trying to load it from -SaveGames- folder!");
+            String newPath = System.getProperty("user.dir") + "\\SaveGames\\\\testJump" + ".json";
+            try {
+                File file = new File(newPath);
+                if (file.exists()) {
+                    loadGame(newPath);
+                }
+            } catch (Exception eII) {
+                view.displayMessage("\n Path not found. Program will be terminated!");
+                System.exit(1);
+            }
         }
     }
 

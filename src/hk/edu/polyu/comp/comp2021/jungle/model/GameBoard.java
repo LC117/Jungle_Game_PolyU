@@ -125,7 +125,7 @@ public class GameBoard {
         }
     }
 
-    public String[][] getGameboard(){
+    public String[][] getGameBoard(){
         return this.boardArray;
     }
 
