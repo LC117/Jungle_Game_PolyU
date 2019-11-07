@@ -12,7 +12,7 @@ public class View{
     }
 
     /*
-
+    displays the passed GameBoard
      */
     public void displayGameUpdate(GameBoard gameBoard){
         System.out.println(gameBoard.toString());
