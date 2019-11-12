@@ -140,6 +140,7 @@ public class Controller {
                     return true;
                 } else {
                     view.displayMessage("Draw not valid, try again!");
+                    view.displayGameUpdate(game.getGameBoard());
                     return processInput();
                 }
             default:

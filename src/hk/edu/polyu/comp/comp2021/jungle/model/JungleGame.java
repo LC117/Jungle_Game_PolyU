@@ -3,11 +3,13 @@ package hk.edu.polyu.comp.comp2021.jungle.model;
 import hk.edu.polyu.comp.comp2021.jungle.model.pieces.Animal;
 import hk.edu.polyu.comp.comp2021.jungle.model.pieces.Rat;
 import hk.edu.polyu.comp.comp2021.jungle.model.pieces.Tiger;
+import hk.edu.polyu.comp.comp2021.jungle.view.View;
 
 import java.io.File;
 
 public class JungleGame {
     private GameBoard board;
+
     public JungleGame(){
         this.board = new GameBoard();
     }
