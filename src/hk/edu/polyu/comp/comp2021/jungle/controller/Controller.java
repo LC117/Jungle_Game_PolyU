@@ -143,7 +143,7 @@ public class Controller {
                     return processInput();
                 }
             default:
-                view.displayMessage("Draw not valid, try again!");
+                view.displayMessage("Input not valid, try again!");
         }
         return processInput();
     }
