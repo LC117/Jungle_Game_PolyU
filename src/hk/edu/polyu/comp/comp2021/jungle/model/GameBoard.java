@@ -60,7 +60,7 @@ public class GameBoard {
                     } else if (x == 2 || x == 4) {
                         boardArray[y][x] = "[_]"; //traps
                     }else{
-                        boardArray[y][x] = "|_|"; //water
+                        boardArray[y][x] = "|_|"; //land
                     }
                 } else if (y == 1 || y == height - 2) {
                     if (x == 3) {
@@ -70,7 +70,7 @@ public class GameBoard {
                     }
                 } else if (y == 3 || y == 4 || y == 5) {
                     if (x == 1 || x == 2 || x == width - 2 || x == width - 3) {
-                        boardArray[y][x] = "(_)";
+                        boardArray[y][x] = "(_)"; //water
                     }else{
                         boardArray[y][x] = "|_|";
                     }
