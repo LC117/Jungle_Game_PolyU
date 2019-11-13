@@ -42,15 +42,7 @@ public class Controller {
         this.backPlayerName = getPlayerName();
 
         // --The Game starts here!--
-        while (true){// each iteration resembles one turn
-            checkForWinner();
-            view.displayMessage("Turn: " + turnCount);
-            view.displayGameUpdate(game.getGameBoard());
-            if(processInput()){
-                //here the input is a move!
-                this.turnCount++;
-            }
-        }
+        continueGame();
     }
 
     /*
@@ -101,7 +93,7 @@ public class Controller {
     /*
     processInput() takes in the next input and returns true if the turnCount should be updated!
      */
-    private boolean processInput() {
+    private boolean processInput(){
         String actualPlayerName;
 
         //Demand Input:
@@ -276,6 +268,9 @@ public class Controller {
     private boolean frontPlayersTurn(){
         return turnCount % 2 == 0;
     }
+
+    // PUBLIC FUNCTIONS TO TEST THE PRIVATE ONES //
+
 
 
 }
