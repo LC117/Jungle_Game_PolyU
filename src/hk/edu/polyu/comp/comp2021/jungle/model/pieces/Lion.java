@@ -15,7 +15,7 @@ public class Lion extends Animal {
         this.x_location = x_location;
         this.y_location = y_location;
         this.frontPlayer = frontPlayer;
-        this.strength = 1;
+        this.strength = 7;
         this.gameBoard = gameBoard;
     }
 
