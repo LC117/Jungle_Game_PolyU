@@ -216,11 +216,15 @@ public class Controller {
             continueGame();
         } catch (IOException e) {
             view.displayMessage("\n Error with reading the file. Trying to load it from -SaveGames- folder!");
-            String newPath = System.getProperty("user.dir") + "\\SaveGames\\\\testJump" + ".json";
+            String newPath = System.getProperty("user.dir") + "\\SaveGames\\"+ path + ".json";
+            newPath = newPath.replaceAll("\\\\", "\\\\\\\\");
             try {
                 File file = new File(newPath);
                 if (file.exists()) {
+                    view.displayMessage("\n Loading successful!");
                     loadGame(newPath);
+                }else {
+                    view.displayMessage("\n Not successful!");
                 }
             } catch (Exception eII) {
                 view.displayMessage("\n Path not found. Program will be terminated!");

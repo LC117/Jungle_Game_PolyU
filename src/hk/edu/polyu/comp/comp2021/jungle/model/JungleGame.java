@@ -55,13 +55,15 @@ public class JungleGame {
         if (saveSuccessful){
             return true;
         }else{
-            String newPath = System.getProperty("user.dir") + "\\SaveGames\\\\testJump" + ".json";
+            //in this case the variable "path" is just the name.
+            String newPath = System.getProperty("user.dir") + "\\SaveGames\\"+ path + ".json";
+            newPath = newPath.replaceAll("\\\\", "\\\\\\\\");
             try {
                 File file = new File(newPath);
-                if (file.exists()) {
-                    saveAndLoad.saveGame(newPath, frontName, backName, turnCount, board);
+                if(!file.exists()){
+                    file.createNewFile();
                 }
-                return true;
+                return saveAndLoad.saveGame(newPath, frontName, backName, turnCount, board);
             } catch (Exception eII) {
                 return false;
             }

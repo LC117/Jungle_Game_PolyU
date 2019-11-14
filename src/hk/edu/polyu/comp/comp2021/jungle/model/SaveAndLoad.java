@@ -83,6 +83,10 @@ public class SaveAndLoad {
      */
     public boolean saveGame (String path, String frontName, String backName, int turnCount, GameBoard gameBoard){
         JSONObject gameJason = gameBoardToJson(gameBoard, frontName, backName, turnCount);
+        File tempFile = new File(path);
+        if (!tempFile.exists()) {
+            return false;
+        }
         try {
             // paths attribute needs form: "Z:\\Programming\\java_test\\test.txt":
             FileWriter file = new FileWriter(path);
