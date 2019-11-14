@@ -46,7 +46,16 @@ class AnimalTest {
             int value = temp ? 1 : 0;
             assertEquals(arr[i][2], value, "Tests if Animal.move() returns correct boolean");
         }
-
+        //test for Water:
+        Animal testAnimal = new Animal(3,4, true, 4, gameBoard);
+        temp = testAnimal.move(4, 4);
+        int value = temp ? 1 : 0;
+        assertEquals(0, value, "Tests if Animal.move() returns correct boolean");
+        // test for our of game board
+        testAnimal = new Animal(6,0, true, 4, gameBoard);
+        temp = testAnimal.move(7, 0);
+        value = temp ? 1 : 0;
+        assertEquals(0, value, "Tests if Animal.move() returns correct boolean");
     }
 
     @Test
@@ -61,5 +70,9 @@ class AnimalTest {
         Animal testAnimal = new Animal(1,1, true, 4, gameBoard);
         boolean temp = testAnimal.getFrontPlayer();
         assertEquals(true, temp, "Tests if Animal.getFrontPlayer() returns correct boolean");
+
+        testAnimal = new Animal(1,1, false, 4, gameBoard);
+        temp = testAnimal.getFrontPlayer();
+        assertEquals(false, temp, "Tests if Animal.getFrontPlayer() returns correct boolean");
     }
 }
