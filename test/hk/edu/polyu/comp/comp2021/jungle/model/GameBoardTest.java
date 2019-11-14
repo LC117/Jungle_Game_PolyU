@@ -6,11 +6,29 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.*;
 
-class GameBoardTest {
+import java.util.Arrays;
 
+class GameBoardTest {
+    private GameBoard gameBoard = new GameBoard();
 
     @Test
     void getGameboard1() {
+        String[][] board = new String[][]{
+                {"|g|","|_|","[_]","{_}","[_]","|_|","|f|"},
+                {"|_|","|c|","|_|","[_]","|_|","|b|","|_|"},
+                {"|a|","|_|","|e|","|_|","|d|","|_|","|h|"},
+                {"|_|","(_)","(_)","|_|","(_)","(_)","|_|"},
+                {"|_|","(_)","(_)","|_|","(_)","(_)","|_|"},
+                {"|_|","(_)","(_)","|_|","(_)","(_)","|_|"},
+                {"|8|","|_|","|4|","|_|","|5|","|_|","|1|"},
+                {"|_|","|2|","|_|","[_]","|_|","|3|","|_|"},
+                {"|6|","|_|","[_]","{_}","[_]","|_|","|7|"}
+        };
+
+        String [][] temp = gameBoard.getGameBoard();
+        System.out.println(temp[0].toString());
+        System.out.println(board[0].toString());
+        assertTrue(Arrays.equals(board, temp), "tests if get Gameboard returns proper array");
     }
 
     @Test
