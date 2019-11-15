@@ -35,15 +35,15 @@ public class Rat extends Animal{
 
         if (collisionAnimal == null){
             animalInWay = false;
-        }
-        else if (collisionAnimal.getFrontPlayer() == frontPlayer){
+        }else if(collisionAnimal.onWater() != this.onWater()){ //collision animal on water, this rat not on water.
+            animalInWay = true;
+        }else if (collisionAnimal.getFrontPlayer() == frontPlayer){
             animalInWay = true;
         }else if (collisionAnimal.getStrength() > this.strength){
             animalInWay = true;
         }else if (collisionAnimal.getStrength() <= this.strength){ //other Animal will be eaten!
             animalInWay = false;
         }
-
         //allows the rat to traverse on water and eat the elephant
         if(water && this.strength == 1){
             water = false;

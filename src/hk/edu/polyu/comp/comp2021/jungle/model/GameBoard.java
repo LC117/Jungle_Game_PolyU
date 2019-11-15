@@ -164,7 +164,7 @@ public class GameBoard {
 
         if(eatenAnimal.getFrontPlayer()){
             for (int i = 0; i < 8; i++) {
-                if (playerFrontAnimals[i].equals(eatenAnimal)){
+                if (playerFrontAnimals[i] != null && playerFrontAnimals[i].equals(eatenAnimal)){
                     playerFrontAnimals[i] = null; // animal is gone
                     return;
                 }
@@ -172,7 +172,7 @@ public class GameBoard {
         }
         else {
             for (int i = 0; i < 8; i++) {
-                if (playerBackAnimals[i].equals(eatenAnimal)){
+                if (playerBackAnimals[i] != null && playerBackAnimals[i].equals(eatenAnimal)){
                     playerBackAnimals[i] = null; // animal is gone
                     return;
                 }
@@ -206,6 +206,24 @@ public class GameBoard {
 
     public boolean isWater(int x, int y){
         return this.boardArray[y][x].indexOf('(') == 0;
+    }
+
+    public void empty(){ //removes all animals
+        for (int i = 0; i < 8; i++) {
+            if(playerFrontAnimals[i] != null) {
+                playerFrontAnimals[i] = null;
+            }if(playerBackAnimals[i] != null) {
+                playerBackAnimals[i] = null;
+            }
+        }
+    }
+    public void insertAnimal(Animal animal){
+        int position = animal.getStrength() - 1;
+        if(animal.getFrontPlayer()){
+            playerFrontAnimals[position] = animal;
+        }else {
+            playerBackAnimals[position] = animal;
+        }
     }
 
     @Override

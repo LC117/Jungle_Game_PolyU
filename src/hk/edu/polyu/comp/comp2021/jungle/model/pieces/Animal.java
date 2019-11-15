@@ -44,14 +44,12 @@ public class Animal{
         }
         else if (collisionAnimal.getFrontPlayer() == frontPlayer){
             animalInWay = true;
+        }else if (enemyOnTrap(collisionAnimal)){
+            animalInWay = false;
         }else if (collisionAnimal.strength > this.strength){
             animalInWay = true;
-        }else if (collisionAnimal.strength <= this.strength || enemyOnTrap(collisionAnimal)){ //other Animal will be eaten!
-            animalInWay = false;
-        }
-        else if (gameBoard.isTrap(x,y)){
-            animalInWay = false;
-        }
+        }else if (collisionAnimal.strength <= this.strength ){ //other Animal will be eaten!
+            animalInWay = false; }
         return !water && inBounds && !ownDen && !animalInWay; // not in water, in Bound, not on OWN Den, not on own Animal, not stronger enemy Animal!
     }
 
@@ -85,8 +83,7 @@ public class Animal{
     }
 
     private boolean enemyOnTrap(Animal animal){
-        return gameBoard.isTrap(animal.getX_location(), animal.getY_location());
-    }
+        return gameBoard.isTrap(animal.getX_location(), animal.getY_location()); }
 
     @Override
     public String toString(){
@@ -102,7 +99,14 @@ public class Animal{
     }
 
     public GameBoard getGameBoard(){
-        return  this.gameBoard;
+        return this.gameBoard;
+    }
+
+    public boolean onWater(){
+        int x = x_location;
+        int y = y_location;
+        return  (y == 3 || y == 4 || y == 5) && (x == 1 || x == 2 || x == 4 || x == 5);
+
     }
 }
 
