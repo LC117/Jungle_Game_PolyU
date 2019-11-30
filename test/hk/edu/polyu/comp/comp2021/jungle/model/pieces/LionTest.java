@@ -55,6 +55,14 @@ class LionTest {
         Rat inWater = new Rat(5, 5, true, gameBoard);
         gameBoard.insertAnimal(inWater);
         assertEquals(false, testAnimal.move(3, 5), "This move should not work!");
+        //Eat Wolf over water
+        gameBoard.empty();
+        testAnimal = new Lion(4, 2, true,  gameBoard);
+        gameBoard.insertAnimal(testAnimal);
+        toEat = new Wolf(4, 6, false,  gameBoard);
+        gameBoard.insertAnimal(toEat);
+        assertEquals(true, testAnimal.move(4, 6), "This move should work!");
+        assertEquals(testAnimal, gameBoard.getAnimal(4, 6), "Lion on correct position.");
 
     }
 }
